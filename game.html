@@ -1,0 +1,3734 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset='utf8'>
+ <title>AnimalsBomb!</title>
+<!--<script type="text/javascript" src="node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>-->
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src='jquery-1.8.2.js'></script>
+<script type="text/javascript" src='three_57.js'></script>
+<script src="fonts/helvetiker_regular.typeface.js"></script>
+<script type="text/javascript" src='stats.js'></script>
+ <style type="text/css">
+ body{
+ margin: 0;
+ }
+
+::-webkit-scrollbar {
+    width: 8px;
+    
+}
+::-webkit-scrollbar-thumb   {
+background: rgba(0,0,0,0.3);
+border-radius: 2px;
+}
+
+
+#intro {
+ background: #FFF;
+ height: 100%;
+ position: fixed;
+top:0px;
+left: 0px;
+ width: 100%;
+overflow: hidden;
+z-index: 6;
+ }
+
+#rooms {
+position:absolute; 
+z-index:5;
+width: 100%;
+height: 100%;
+background: #ff9900;
+top: 0px;
+left: 0px; 
+overflow: hidden;
+}
+
+.rooms { 
+display: inline-block; 
+position:relative;
+width: 40%;
+height: 20%;
+margin-left: 5%;
+margin-right: 5%;
+margin-top: 5%;
+color: white;
+background: blue;
+}
+#buttonnewroom, #backroom {
+position: fixed;
+width: 150px;
+height: 40px;
+line-height: 40px;
+text-align: center;
+color: white;
+font-size: 24px;
+font-weight: bold;
+background: blue;
+border-radius: 4px;
+border:1px solid #000;
+bottom: 50px;
+  left:-moz-calc(50% - 76px);
+  left:calc(50% - 76px);
+left:-webkit-calc(50% - 76px);
+}
+
+#buttonnewroom:hover, #backroom:hover {
+cursor: pointer;
+}
+
+#nickname {
+position: absolute;
+width: 200px;
+height: 25px;
+line-height: 25px;
+text-align: center;
+font-size: 24px;
+font-weight: bold;
+border-radius: 4px;
+border:1px solid #000;
+bottom: 180px;
+  left:-moz-calc(50% - 102px);
+  left:calc(50% - 102px);
+left:-webkit-calc(50% - 102px);
+}
+
+#nickerror {
+display: none;
+position: absolute;
+width: 200px;
+height: 25px;
+line-height: 25px;
+text-align: center;
+font-size: 24px;
+font-weight: bold;
+border-radius: 4px;
+background: red;
+border:1px solid #000;
+bottom: 210px;
+  left:-moz-calc(50% - 102px);
+  left:calc(50% - 102px);
+left:-webkit-calc(50% - 102px);
+}
+
+
+#button { 
+position:absolute;
+z-index:5 ;
+width: 150px;
+height: 40px;
+line-height: 40px;
+text-align: center;
+color: white;
+font-size: 24px;
+font-weight: bold;
+background: blue;
+border-radius: 4px;
+border:1px solid #000;
+bottom: 125px;
+  left:-moz-calc(50% - 76px);
+  left:calc(50% - 76px);
+left:-webkit-calc(50% - 76px);
+}
+#button:hover {
+cursor: pointer;
+background: red;
+}
+
+#players {
+position:absolute;
+width: 100%;
+height: 100%;
+left:0px;
+top: 0px;
+z-index:3;
+}
+
+.playerscuadro {
+display: inline-block;
+position:relative;
+width: 14%;
+height: 250px;
+margin-left: 5%;
+top: 200px;
+background: white;
+border-radius: 4px;
+-webkit-box-shadow: inset 0px 0px 4px 4px #888888;
+box-shadow: inset 0px 0px 4px 4px #888888;
+}
+
+.playerscuadro img {
+margin-left: 10%;
+margin-top: 10%;
+border-radius: 4px;
+	-shadow: inset 0px 0px 4px 4px #888888;
+box-shadow: inset 0px 0px 4px 4px #888888;
+}
+
+.Nickname {
+margin-left: 10%;
+margin-top: 10%;
+width: 80%;
+text-align:center;
+font-weight: bold;
+color: black;
+}
+
+
+.buttonlisto {
+display: inline-block;
+position:relative;
+width: 80%;
+height: 30px;
+margin-left: 10%;
+top: 10px;
+background: gray;
+text-align:center;
+line-height: 30px;
+color: white;
+font-weight: bold;
+border-radius: 4px;
+-webkit-box-shadow: inset 0px 0px 4px 4px #888888;
+box-shadow: inset 0px 0px 4px 4px #888888;
+}
+
+ #escenario{
+ background: #FFF;
+ height: 100%;
+ position: fixed;
+top:0px;
+left: 0px;
+ width: 100%;
+overflow: hidden;
+ }
+#escenario:hover {
+cursor:move;
+}
+
+#tiempo {
+position:absolute;
+height: 70px;
+width: 200px;
+top: 0px;
+  left:-moz-calc(50% - 100px);
+  left:calc(50% - 100px);
+  left:-webkit-calc(50% - 100px);
+color: green;
+text-align: center;
+font-size: 60px;
+font-weight: bold;
+z-index: 10;
+}
+#cchat { 
+position:absolute;
+top: -190px;
+left:0px;
+z-index:4;
+width: 100%;
+height: 215px;
+overflow: hidden;
+}
+
+#chat { 
+position:absolute;
+height: 165px;
+width: 100%;
+left:0%;
+top: 0px;
+color: white;
+overflow-y: auto;
+background: rgba(0,0,0,0.5);
+z-index:1;
+}
+
+#chat p{
+padding: 0px;
+margin: 0px;
+}
+
+#messagechat {
+position:absolute;
+height: 25px;
+width: 100%;
+left: 0px;
+top: 165px;
+color:white;
+background: rgba(0,0,0,0.5);
+z-index:1;
+border: 0px;
+-webkit-box-shadow: inset 0px 0px 1px 1px #888888;
+box-shadow: inset 0px 0px 1px 1px #888888;
+padding: 0px;
+}
+#buttonchat {
+position:absolute;
+height: 25px;
+width: 60px;
+left: 0px;
+top: 190px;
+color: white;
+line-height: 25px;
+text-align:center;
+font-weight: bold;
+background: rgba(0,0,0,0.5);
+border-radius: 0px 0px 4px 0px;
+animation:none;
+-webkit-animation:none; 
+/* 
+ animation:buttonchatchange 2s infinite;
+-webkit-animation:buttonchatchange 2s infinite;
+*/
+}
+#buttonchat:hover {
+cursor:pointer;
+}
+
+@keyframes buttonchatchange
+{
+0% {background: rgba(255,0,0,0.5);}
+100% {background: rgba(0,0,0,0.5);}
+}
+
+@-webkit-keyframes buttonchatchange /* Safari and Chrome */
+{
+0% {background: rgba(255,0,0,0.5);}
+100% {background: rgba(0,0,0,0.5);}
+}
+
+
+
+
+#informacion {
+position: fixed;
+right: 20px; 
+top: 60px;
+width: 24px;
+height: 24px;
+background: url('img/informacion.png') no-repeat;
+background-size: 24px 24px;
+z-index: 12;
+}
+
+#informacion:hover {
+cursor: pointer;
+}
+
+#fullscreen { 
+position: fixed;
+right: 20px;
+top: 90px;
+width: 24px;
+height: 24px;
+background: url('img/fullscreen.png') no-repeat;
+background-size: 24px 24px;
+z-index:12;
+}
+
+#fullscreen:hover {
+cursor: pointer;
+}
+
+#info {
+position: fixed;
+top: 100px;
+left: -webkit-calc(50% - 300px); left: -moz-calc(50% - 300px);
+height: auto;
+width: 600px;
+background: rgba(0,0,0,0.9);
+border-radius: 4px;
+border: 5px;
+border-style: solid;
+border-color: #bababa;
+color: #fff;
+ font-family: Verdana, Geneva, sans-serif;
+  font-size: 14px;
+z-index: 10;
+display:none;
+padding: 10px;
+}
+.info {
+  width: 100%;
+  font-family: Verdana, Geneva, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  color: #fff;
+  border-bottom: 3px solid #fff;
+
+}
+
+#closeinfo {
+position:absolute;
+right: -16px;
+top: -16px;
+background: url('img/close.png') no-repeat;
+background-size:32px 32px;
+width: 32px;
+height: 32px;
+z-index: 11;
+}
+#closeinfo:hover { 
+cursor: pointer;
+}
+
+#error {
+position:absolute;
+top: 0px;
+left: 100px;
+color: black;
+width: auto;
+height: 50px;
+z-index: 1;
+}
+ </style>
+
+<script>
+var websocket = io.connect();
+var usuario;
+var nickname;
+var numroom;
+var time = false;
+var timetime = 180;
+jQuery.fn.exists = function(){return this.length>0;}
+
+window.onload = function()
+{
+
+
+ websocket.on("connect", function () {
+        // llama al lado del servidor, funcion 'adduser' y envia un parametro (valor del prompt)
+        //websocket.emit("adduser", "player1");
+	websocket.emit("newuser");
+      });
+
+
+websocket.on("newmensagechat", function(data){
+$("#chat").append('<p><b>'+ data.nick +'</b>: '+data.message+'</p>');
+var objDiv = document.getElementById("chat");
+objDiv.scrollTop = objDiv.scrollHeight;
+var positionchat = $('#cchat').css('top');
+  if(positionchat != '0px') { 
+			      $("#buttonchat").css({"-webkit-animation":"buttonchatchange 1s infinite","animation":"buttonchatchange 1s infinite"})
+			    }
+  });
+
+websocket.on("ErrorNick", function(username){
+$('#nickerror').show();
+});
+
+$("#nickname").change(function(){
+$('#nickerror').hide();
+});
+
+websocket.on("nicktrue", function(username){
+nickname = username;
+$('#intro').hide();
+websocket.emit("actualizarrooms");
+
+});
+
+websocket.on("rooms", function(rooms){
+$('#rooms div[class="rooms"]').remove();
+for (i in rooms){
+  if(rooms[i].users >= 5) { } else {
+  $("#rooms").append('<div class="rooms" alt='+ rooms[i].room +'>Num Room:' + rooms[i].room + '</br>Players:'+ rooms[i].users+'</div>');
+  }
+}
+}); 
+
+
+
+websocket.on("numroom",function(data){
+numroom = data;
+websocket.emit("adduser", { room: numroom, user: "player1", nick: nickname});
+});
+
+$('#rooms div[class="rooms"]').live("click", function(){ 
+numroom  = $(this).attr("alt");
+websocket.emit("joinroom", numroom);
+$("#rooms").hide();
+
+});
+
+$('#backroom').live("click", function(){
+websocket.emit("leaveroom", numroom);
+$('#rooms').show();
+$('#chat').html('');
+});
+
+websocket.on("exitroom", function(room){
+$('#players div[class="playerscuadro"]').remove();
+numroom = room;
+});
+
+websocket.on("usuariodesconectdo", function(username){
+if(username == "player1") { miEscena.remove(user1);  miEscena.remove(munye1); $('#player1').remove(); }
+if(username == "player2") { miEscena.remove(user2); miEscena.remove(munye2); $('#player2').remove();}
+if(username == "player3") { miEscena.remove(user3); miEscena.remove(munye3); $('#player3').remove();}
+if(username == "player4") { miEscena.remove(user4); miEscena.remove(munye4); $('#player4').remove();}
+if(username == "player5") { miEscena.remove(user5); miEscena.remove(munye5); $('#player5').remove();}
+});
+
+websocket.on("ErrorName", function(username){
+if(username == "player1") { websocket.emit("adduser", { room: numroom, user: "player2", nick: nickname }); }
+if(username == "player2") { websocket.emit("adduser", { room: numroom, user: "player3", nick: nickname }); }
+if(username == "player3") { websocket.emit("adduser", { room: numroom, user: "player4", nick: nickname }); }
+if(username == "player4") { websocket.emit("adduser", { room: numroom, user: "player5", nick: nickname }); }
+if(username == "player5") { websocket.emit("adduser", { room: numroom, user: "player1", nick: nickname }); }
+});
+/*
+websocket.on("updateusers",function(username){
+
+for(i in username)
+{
+if(username[i] == "player1") { miEscena.add(user1); miEscena.add(munye1); }
+if(username[i] == "player2") { miEscena.add(user2); miEscena.add(munye2); }
+if(username[i] == "player3") { miEscena.add(user3); miEscena.add(munye3); }
+if(username[i] == "player4") { miEscena.add(user4); miEscena.add(munye4); }
+if(username[i] == "player5") { miEscena.add(user5); miEscena.add(munye5); }
+}
+
+});
+*/
+
+websocket.on("updateusers",function(username){
+var usuariosenlinea = 0;
+for(i in username)
+{
+//usuariosenlinea +=1;
+if(username[i].user == "player1" && username[i].room == numroom) {usuariosenlinea +=1; if ($('#player1').exists()) { if(username[i].okey == "true" && username[i].room == numroom) { $('#player1 div[class="buttonlisto"]').css({"background":"green"}); } else { $('#player1 div[class="buttonlisto"]').css({"background":"gray"}); } } else { $('#players').append('<div id="player1" class="playerscuadro"><img src="img/player1.png" width="80%"><div class="Nickname">' + username[i].nick + '</div><div class="buttonlisto">Listo</div></div>');  } }
+if(username[i].user == "player2" && username[i].room == numroom) {usuariosenlinea +=1; if ($('#player2').exists()) { if(username[i].okey == "true" && username[i].room == numroom) { $('#player2 div[class="buttonlisto"]').css({"background":"green"}); } else { $('#player2 div[class="buttonlisto"]').css({"background":"gray"}); } } else { $('#players').append('<div id="player2" class="playerscuadro"><img src="img/player2.png" width="80%"><div class="Nickname">' + username[i].nick + '</div><div class="buttonlisto">Listo</div></div>');  } } 
+if(username[i].user == "player3" && username[i].room == numroom) {usuariosenlinea +=1; if ($('#player3').exists()) { if(username[i].okey == "true" && username[i].room == numroom) { $('#player3 div[class="buttonlisto"]').css({"background":"green"}); } else { $('#player3 div[class="buttonlisto"]').css({"background":"gray"}); } } else { $('#players').append('<div id="player3" class="playerscuadro"><img src="img/player3.png" width="80%"><div class="Nickname">' + username[i].nick + '</div><div class="buttonlisto">Listo</div></div>');  } }
+if(username[i].user == "player4" && username[i].room == numroom) {usuariosenlinea +=1; if ($('#player4').exists()) { if(username[i].okey == "true" && username[i].room == numroom) { $('#player4 div[class="buttonlisto"]').css({"background":"green"}); } else { $('#player4 div[class="buttonlisto"]').css({"background":"gray"}); } } else { $('#players').append('<div id="player4" class="playerscuadro"><img src="img/player4.png" width="80%"><div class="Nickname">' + username[i].nick + '</div><div class="buttonlisto">Listo</div></div>');  } }
+if(username[i].user == "player5" && username[i].room == numroom) {usuariosenlinea +=1; if ($('#player5').exists()) { if(username[i].okey == "true" && username[i].room == numroom) { $('#player5 div[class="buttonlisto"]').css({"background":"green"}); } else { $('#player5 div[class="buttonlisto"]').css({"background":"gray"}); } } else { $('#players').append('<div id="player5" class="playerscuadro"><img src="img/player5.png" width="80%"><div class="Nickname">' + username[i].nick + '</div><div class="buttonlisto">Listo</div></div>');  } }
+}
+
+var usuarioslistos = 0;
+for(i in username) 
+{
+if(username[i].user == "player1" && username[i].okey == "true" && username[i].room == numroom ) { $('#player1 div[class="buttonlisto"]').css({"background":"green"}); usuarioslistos +=1; }
+if(username[i].user == "player2" && username[i].okey == "true" && username[i].room == numroom) { $('#player2 div[class="buttonlisto"]').css({"background":"green"}); usuarioslistos +=1;}
+if(username[i].user == "player3" && username[i].okey == "true" && username[i].room == numroom) { $('#player3 div[class="buttonlisto"]').css({"background":"green"}); usuarioslistos +=1;}
+if(username[i].user == "player4" && username[i].okey == "true" && username[i].room == numroom) { $('#player4 div[class="buttonlisto"]').css({"background":"green"}); usuarioslistos +=1;}
+if(username[i].user == "player5" && username[i].okey == "true" && username[i].room == numroom) { $('#player5 div[class="buttonlisto"]').css({"background":"green"}); usuarioslistos +=1;}
+}
+
+if(usuariosenlinea == usuarioslistos && usuariosenlinea > 1) {
+  for(i in username){
+  if(username[i].user == "player1" && username[i].room == numroom) { miEscena.add(user1); miEscena.add(munye1); }
+  if(username[i].user == "player2" && username[i].room == numroom) { miEscena.add(user2); miEscena.add(munye2); }
+  if(username[i].user == "player3" && username[i].room == numroom) { miEscena.add(user3); miEscena.add(munye3); }
+  if(username[i].user == "player4" && username[i].room == numroom) { miEscena.add(user4); miEscena.add(munye4); }
+  if(username[i].user == "player5" && username[i].room == numroom) { miEscena.add(user5); miEscena.add(munye5); }
+  }
+$('#players').hide();
+time = true;
+timetime = 180;
+
+
+var map = [ [0,0,2,0,2,0,0,2,0,0,2,0,0], //0
+            [0,1,2,1,0,1,2,1,2,1,0,1,0], //1
+            [0,2,2,0,0,0,0,2,0,2,2,0,2], //2
+            [0,1,0,1,2,1,2,1,0,1,2,1,0], //3
+            [2,2,0,0,0,2,0,2,0,0,2,2,2], //4
+            [2,1,0,1,2,1,0,1,2,1,0,1,0], //5
+            [0,2,0,2,0,2,0,0,2,0,2,2,2], //6
+            [0,1,2,1,0,1,2,1,2,1,0,1,2], //7
+            [2,0,0,0,2,0,0,2,0,2,2,0,2], //8
+	    [0,1,0,1,0,1,2,1,0,1,0,1,0], //9
+            [0,0,2,2,2,0,2,2,2,0,2,0,0] //10       
+	  ];
+
+
+
+/*
+
+var map = [ [0,0,2,0,2,0,0,2,0,0,2,0,0], //0
+            [0,1,2,1,0,1,2,1,2,1,0,1,0], //1
+            [0,2,2,0,0,0,0,2,0,0,2,0,2], //2
+            [0,1,0,1,2,1,2,1,0,1,0,1,0], //3
+            [0,2,0,0,0,2,0,2,0,0,2,0,2], //4
+            [0,1,0,1,2,1,0,1,2,1,0,1,0], //5
+            [0,2,0,2,0,2,0,0,2,0,2,0,2], //6
+            [0,1,2,1,0,1,2,1,2,1,0,1,0], //7
+            [0,0,0,0,2,0,0,2,0,2,2,0,2], //8
+	    [0,1,0,1,0,1,2,1,0,1,0,1,0], //9
+            [0,0,0,0,0,0,0,0,0,0,2,0,0] //10       
+	  ];
+
+*/
+
+for (var i=0; i < collisionbloquerompible.length; i++) {
+miEscena.remove(collisionbloquerompible[i]);
+}
+
+for (var i=0; i < collidableMeshList.length; i++) {
+miEscena.remove(collidableMeshList[i]);
+}
+collisionbloquerompible = [];
+collidableMeshList = [];
+
+for(i=0; i<map.length; i++){
+      //for(fila in map) {
+	for (y=0; y < map[i].length; y++){
+	
+	 if(map[i][y] == 1) { //alert('Fila' + i + 'columna' + y);
+	      var bloque = new THREE.Mesh(new THREE.CubeGeometry(20, 20, 20), materialbloque);
+			bloque.position.x = y*20-120;
+			bloque.position.y = 15;
+			bloque.position.z = i*20-100;
+			
+			miEscena.add(bloque);
+			collidableMeshList.push(bloque);
+			}
+
+	  
+	if(map[i][y] == 2) {
+		      var bloque = new THREE.Mesh(new THREE.CubeGeometry(20, 20, 20), materialbloquerompible);
+			bloque.position.x = y*20-120;
+			bloque.position.y = 15;
+			bloque.position.z = i*20-100;
+			
+			miEscena.add(bloque);
+			collidableMeshList.push(bloque);
+			collisionbloquerompible.push(bloque);
+			}
+
+	      }
+}
+
+			user1.position.x = 120;
+			user1.position.y = 26;
+			user1.position.z = 100;
+		        user2.position.x = -120;
+			user2.position.y = 26;
+			user2.position.z = -100;
+		        user3.position.x = -120;
+			user3.position.y = 26;
+			user3.position.z = 100;
+		        user4.position.x = 120;
+			user4.position.y = 26;
+			user4.position.z = -100;
+		        user5.position.x = 0;
+			user5.position.y = 26;
+			user5.position.z = 0;
+
+
+bombnumber = 1; 
+vivo = true;
+
+websocket.emit("playerjugando", usuario);
+}
+
+});
+
+
+
+websocket.on("addplayer", function(username){
+//alert('hola');
+ if(username == "player1") { user = user1;  usuario = "player1";}
+ if(username == "player2") {  user = user2;  usuario = "player2";}
+ if(username == "player3") { user = user3;  usuario = "player3";}
+ if(username == "player4") {  user = user4;  usuario = "player4";}
+ if(username == "player5") {  user = user5;  usuario = "player5";}
+
+
+$('#players div[class="playerscuadro"]').css({"background":"white"});
+$('#'+usuario).css({"background":"yellow"});
+
+$('#'+usuario+' div[class="buttonlisto"]').live('mouseover', function(){
+$('#'+usuario+' div[class="buttonlisto"]').css({"cursor":"pointer"});
+});
+
+$('#'+usuario+' div[class="buttonlisto"]').live('click', function(){
+websocket.emit("usuariolisto", {user: usuario, room: numroom});
+});
+});
+
+
+websocket.on("newposition", function(data){
+if(data.usuario == "player1") { user1.position.x = data.posx; user1.position.y = data.posy; user1.position.z = data.posz;
+switch(data.direction)
+{
+case "up":
+  munye1.rotation.y = 360 * Math.PI/360;
+  break;
+case "down":
+  munye1.rotation.y = 0 * Math.PI/360;
+  break;
+case "left":
+  munye1.rotation.y = 540 * Math.PI/360;
+  break;
+case "rigth":
+  munye1.rotation.y = 180 * Math.PI/360;
+  break;
+
+}
+
+ }
+if(data.usuario == "player2") { user2.position.x = data.posx; user2.position.y = data.posy; user2.position.z = data.posz; 
+switch(data.direction)
+{
+case "up":
+  munye2.rotation.y = 360* Math.PI/360;
+  break;
+case "down":
+  munye2.rotation.y = 0* Math.PI/360;
+  break;
+case "left":
+  munye2.rotation.y = 540* Math.PI/360;
+  break;
+case "rigth":
+  munye2.rotation.y = 180* Math.PI/360;
+  break;
+
+}
+
+}
+if(data.usuario == "player3") { user3.position.x = data.posx; user3.position.y = data.posy; user3.position.z = data.posz; 
+switch(data.direction)
+{
+case "up":
+  munye3.rotation.y = 360* Math.PI/360;
+  break;
+case "down":
+  munye3.rotation.y = 0* Math.PI/360;
+  break;
+case "left":
+  munye3.rotation.y = 540* Math.PI/360;
+  break;
+case "rigth":
+  munye3.rotation.y = 180* Math.PI/360;
+  break;
+}
+
+}
+if(data.usuario == "player4") { user4.position.x = data.posx; user4.position.y = data.posy; user4.position.z = data.posz; 
+switch(data.direction)
+{
+case "up":
+  munye4.rotation.y = 360* Math.PI/360;
+  break;
+case "down":
+  munye4.rotation.y = 0* Math.PI/360;
+  break;
+case "left":
+  munye4.rotation.y = 540* Math.PI/360;
+  break;
+case "rigth":
+  munye4.rotation.y = 180* Math.PI/360;
+  break;
+}
+}
+if(data.usuario == "player5") { user5.position.x = data.posx; user5.position.y = data.posy; user5.position.z = data.posz; 
+switch(data.direction)
+{
+case "up":
+  munye5.rotation.y = 360* Math.PI/360;
+  break;
+case "down":
+  munye5.rotation.y = 0* Math.PI/360;
+  break;
+case "left":
+  munye5.rotation.y = 540* Math.PI/360;
+  break;
+case "rigth":
+  munye5.rotation.y = 180* Math.PI/360;
+  break;
+}
+}
+});
+
+websocket.on("bomba", function(data){
+/* var bomba;
+var loader = new THREE.JSONLoader();
+loader.load("fig/bobomb.js", function( geometry, materials ) { //createScene( geometry, materials,  2000, 290, 1200, 0, 360, 0, 70 ) 
+bomba = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial(materials) );
+				bomba.position.set( data.posx, data.posy, data.posz );
+				bomba.scale.set( 5, 5, 5 );
+				bomba.updateMatrix();
+				
+				miEscena.add( bomba );
+} );
+collidableMeshList.push(bomba);
+*/
+
+var bombaarriba = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, 2,28), materialbomba);
+	    bombaarriba.position.x = 0;
+	    bombaarriba.position.y = 10;
+	    bombaarriba.position.z = 0;
+
+var bombamecha = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 4,28), material_gris);
+	    bombamecha.position.x = 0;
+	    bombamecha.position.y = 11;
+	    bombamecha.position.z = 0;
+
+var bombafuejo = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_rojo);
+		        bombafuejo.position.x = 0;
+			bombafuejo.position.y = 14;
+			bombafuejo.position.z = 0;
+
+var ojobomba = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojobomba.position.x = -4;
+			ojobomba.position.y = 5;
+			ojobomba.position.z = 7;
+
+var ojobomba2 = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojobomba2.position.x = 4;
+			ojobomba2.position.y = 5;
+			ojobomba2.position.z = 7;
+
+var puntoojobomba = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojobomba.position.x = 4.5;
+			puntoojobomba.position.y = 5;
+			puntoojobomba.position.z = 8.5;
+
+var puntoojobomba2 = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojobomba2.position.x = -4.5;
+			puntoojobomba2.position.y = 5;
+			puntoojobomba2.position.z = 8.5;
+	   
+
+var bomba = new THREE.Mesh(new THREE.SphereGeometry(10, 28, 28), materialbomba);
+			bomba.add(bombaarriba);
+			bomba.add(bombamecha);
+			bomba.add(bombafuejo);
+			bomba.add(ojobomba);
+			bomba.add(ojobomba2);
+			bomba.add(puntoojobomba);
+			bomba.add(puntoojobomba2);
+		        bomba.position.x = data.posx;
+			bomba.position.y = data.posy;
+			bomba.position.z = data.posz;
+
+miEscena.add(bomba);
+collidableMeshList.push(bomba);
+
+var bombacube = new THREE.Mesh(new THREE.CubeGeometry(20, 20, 20), materialcubebomba);
+		        bombacube.position.x = data.posx;
+			bombacube.position.y = data.posy;
+			bombacube.position.z = data.posz;
+
+miEscena.add(bombacube);
+collidableMeshList.push(bombacube);
+
+
+setTimeout(function(){ 
+
+    miEscena.remove(bomba);
+    miEscena.remove(bombacube);
+    collidableMeshList.splice(collidableMeshList.indexOf(bomba),1); 
+    collidableMeshList.splice(collidableMeshList.indexOf(bombacube),1);
+    
+    var fuegobomba1 = new THREE.Mesh(new THREE.CubeGeometry(20, 20, 20), materialfuegobomba);
+		        fuegobomba1.position.x = data.posx;
+			fuegobomba1.position.y = data.posy-9;
+			fuegobomba1.position.z = data.posz;
+    
+    miEscena.add(fuegobomba1);
+    collidableMeshList.push(fuegobomba1);
+    collisionbomb.push(fuegobomba1);
+
+    var fuegobomba2 = new THREE.Mesh(new THREE.CubeGeometry(20, 20, 20), materialfuegobomba);
+		        fuegobomba2.position.x = data.posx+20;
+			fuegobomba2.position.y = data.posy-9;
+			fuegobomba2.position.z = data.posz;
+    
+    miEscena.add(fuegobomba2);
+    collidableMeshList.push(fuegobomba2);
+    collisionbomb.push(fuegobomba2);
+
+    var fuegobomba3 = new THREE.Mesh(new THREE.CubeGeometry(20, 20, 20), materialfuegobomba);
+		        fuegobomba3.position.x = data.posx-20;
+			fuegobomba3.position.y = data.posy-9;
+			fuegobomba3.position.z = data.posz;
+    
+    miEscena.add(fuegobomba3);
+    collidableMeshList.push(fuegobomba3);
+    collisionbomb.push(fuegobomba3);
+
+     var fuegobomba4 = new THREE.Mesh(new THREE.CubeGeometry(20, 20, 20), materialfuegobomba);
+		        fuegobomba4.position.x = data.posx;
+			fuegobomba4.position.y = data.posy-9;
+			fuegobomba4.position.z = data.posz+20;
+    
+    miEscena.add(fuegobomba4);
+    collidableMeshList.push(fuegobomba4);
+    collisionbomb.push(fuegobomba4);
+
+    var fuegobomba5 = new THREE.Mesh(new THREE.CubeGeometry(20, 20, 20), materialfuegobomba);
+		        fuegobomba5.position.x = data.posx;
+			fuegobomba5.position.y = data.posy-9;
+			fuegobomba5.position.z = data.posz-20;
+    
+    miEscena.add(fuegobomba5);
+    collidableMeshList.push(fuegobomba5);
+    collisionbomb.push(fuegobomba5);
+
+
+
+var left_vector = new THREE.Vector3( -1, 0, 0 );
+var right_vector = new THREE.Vector3( 1, 0, 0 );
+var up_vector = new THREE.Vector3( 0, 0, -1 );
+var down_vector = new THREE.Vector3( 0, 0, 1 );
+
+var bombposition2 = new THREE.Vector3( fuegobomba2.position.x, fuegobomba2.position.y, fuegobomba2.position.z );
+var bombposition3 = new THREE.Vector3( fuegobomba3.position.x, fuegobomba3.position.y, fuegobomba3.position.z );
+var bombposition4 = new THREE.Vector3( fuegobomba4.position.x, fuegobomba4.position.y, fuegobomba4.position.z );
+var bombposition5 = new THREE.Vector3( fuegobomba5.position.x, fuegobomba5.position.y, fuegobomba5.position.z );
+
+
+var raybomb = new THREE.Raycaster( bombposition2, left_vector );
+var intersects = raybomb.intersectObjects( collisionbloquerompible );
+			if ( intersects.length > 0 && intersects[ 0 ].distance < 31) {		 
+				 INTERSECTED = intersects[ 0 ].object;
+				 miEscena.remove(INTERSECTED);
+				 collidableMeshList.splice(collidableMeshList.indexOf(INTERSECTED),1);
+				 collisionbloquerompible.splice(collisionbloquerompible.indexOf(INTERSECTED),1);			 
+				
+			}
+
+var raybomb = new THREE.Raycaster( bombposition3, right_vector );
+var intersects = raybomb.intersectObjects( collisionbloquerompible );
+			if ( intersects.length > 0 && intersects[ 0 ].distance < 31) {
+				 INTERSECTED = intersects[ 0 ].object;	
+				 miEscena.remove(INTERSECTED);
+				 collidableMeshList.splice(collidableMeshList.indexOf(INTERSECTED),1);
+				 collisionbloquerompible.splice(collisionbloquerompible.indexOf(INTERSECTED),1);
+				 
+				
+			}
+
+var raybomb = new THREE.Raycaster( bombposition4, up_vector );
+var intersects = raybomb.intersectObjects( collisionbloquerompible );
+			if ( intersects.length > 0 && intersects[ 0 ].distance < 31) {
+				 INTERSECTED = intersects[ 0 ].object;	
+				 miEscena.remove(INTERSECTED);
+				 collidableMeshList.splice(collidableMeshList.indexOf(INTERSECTED),1);
+				 collisionbloquerompible.splice(collisionbloquerompible.indexOf(INTERSECTED),1);
+			}	
+
+var raybomb = new THREE.Raycaster( bombposition5, down_vector );
+var intersects = raybomb.intersectObjects( collisionbloquerompible );
+			if ( intersects.length > 0 && intersects[ 0 ].distance < 31) {
+				 INTERSECTED = intersects[ 0 ].object;	
+				 miEscena.remove(INTERSECTED);
+				 collidableMeshList.splice(collidableMeshList.indexOf(INTERSECTED),1);
+				 collisionbloquerompible.splice(collisionbloquerompible.indexOf(INTERSECTED),1);
+			}
+
+
+
+
+/*
+for (var vertexIndex = 0; vertexIndex < fuegobomba2.geometry.vertices.length; vertexIndex++)
+{       
+    var localVertex = fuegobomba2.geometry.vertices[vertexIndex].clone();
+    var globalVertex = localVertex.applyMatrix4(fuegobomba2.matrix);
+
+    var directionVector = globalVertex.sub( new THREE.Vector3( fuegobomba2.position.x, fuegobomba2.position.y, fuegobomba2.position.z) );
+   
+    
+    var ray = new THREE.Raycaster( fuegobomba2.position, directionVector.clone().normalize() );
+    var collisionResults = ray.intersectObjects( collidableMeshList );
+    if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
+    {
+        // a collision occurred... do something...
+        INTERSECTED = collisionResults[ 0 ].object;
+        $('#error').html(collisionResults.length);
+	miEscena.remove(INTERSECTED);
+	
+
+    }
+} */
+
+      setTimeout(function(){
+	miEscena.remove(fuegobomba1);
+	miEscena.remove(fuegobomba2); 
+	miEscena.remove(fuegobomba3);
+	miEscena.remove(fuegobomba4);
+	miEscena.remove(fuegobomba5);
+	collidableMeshList.splice(collidableMeshList.indexOf(fuegobomba1),1); 
+	collidableMeshList.splice(collidableMeshList.indexOf(fuegobomba2),1);
+	collidableMeshList.splice(collidableMeshList.indexOf(fuegobomba3),1);
+	collidableMeshList.splice(collidableMeshList.indexOf(fuegobomba4),1);
+	collidableMeshList.splice(collidableMeshList.indexOf(fuegobomba5),1);
+	collisionbomb.splice(collisionbomb.indexOf(fuegobomba1),1); 
+        collisionbomb.splice(collisionbomb.indexOf(fuegobomba2),1); 
+	collisionbomb.splice(collisionbomb.indexOf(fuegobomba3),1);
+	collisionbomb.splice(collisionbomb.indexOf(fuegobomba4),1);
+	collisionbomb.splice(collisionbomb.indexOf(fuegobomba5),1);
+
+
+if(data.usuario == usuario) { bombnumber +=1; }
+
+      },200);
+
+ },2000);
+
+
+});
+
+websocket.on("JugadorMuerto", function(username){
+if(username == "player1") { miEscena.remove(user1);  miEscena.remove(munye1); }
+if(username == "player2") { miEscena.remove(user2); miEscena.remove(munye2); }
+if(username == "player3") { miEscena.remove(user3); miEscena.remove(munye3); }
+if(username == "player4") { miEscena.remove(user4); miEscena.remove(munye4); }
+if(username == "player5") { miEscena.remove(user5); miEscena.remove(munye5); }
+
+if(username == usuario) { bombnumber = 0; vivo = false;}
+});
+
+websocket.on("victoria", function(username){
+var jugadoresvivos = 0;
+for(i in username){
+  if(username[i].vivo == "true" && username[i].room == numroom) {  jugadoresvivos +=1; }
+  }
+
+if(jugadoresvivos == 0) { 
+
+$("#players").show(); 
+time = false;
+luzalarma.intensity = 0;
+
+
+} else if(jugadoresvivos == 1) { 
+$("#players").show();
+time = false;
+luzalarma.intensity = 0;
+}
+
+});
+
+
+}
+
+</script>
+ </head>
+ <body id="game">
+<div id="informacion"></div>
+<div id="info">
+<div id="closeinfo"></div>
+Creado por <a href="https://twitter.com/jerosoler">Jero Soler</a> - <a href="mailto:jero.soler@gmail.com">E-mail</a>
+</div>
+<div id="fullscreen"></div>
+ <div id="intro"><input type="text" id="nickname"><div id="nickerror">Usuario en Uso</div><div id="button">Start</div></div>
+ <div id="rooms"><div id="buttonnewroom">New Room</div></div>
+ <div id="players"><div id="backroom">Exit Room</div></div>
+ <div id="cchat"><div id="chat"></div><form id="form"><input type="text" id="messagechat" placeholder="Enter de text..."></form><div id="buttonchat">Chat</div></div>
+ <div id="escenario"><div id="tiempo"></div></div>
+<script>
+
+
+$(window).resize(function() {
+
+ ancho = $('#escenario').width();
+ alto  = $('#escenario').height();
+ angulo = 60;
+ ratio  = ancho / alto;
+ cerca  = 0.1;
+ lejos  = 10000;
+
+miRender.setSize(ancho, alto);
+miCamara = new THREE.PerspectiveCamera(angulo, ratio, cerca, lejos);
+miCamara.lookAt(suelo.position);
+			miCamara.position.x = radious * Math.sin( theta * Math.PI / 360 ) * Math.cos( phi * Math.PI / 360 );
+			miCamara.position.y = radious * Math.sin( phi * Math.PI / 360 );
+			miCamara.position.z = radious * Math.cos( theta * Math.PI / 360 ) * Math.cos( phi * Math.PI / 360 );
+						miCamara.updateMatrix();
+			miRender.render(miEscena, miCamara);
+});
+
+
+$('#messagechat').click(function(){
+$(this).focus();
+});
+
+var chatfocus = false;
+$('#messagechat').focus(function() {
+  chatfocus = true;
+});
+
+$('#messagechat').blur(function() {
+  chatfocus = false;
+});
+
+var form = document.getElementById('form');
+var mensage = document.getElementById('messagechat');
+form.onsubmit = function(e) {
+		      
+			websocket.emit("mensagechat", { nick: nickname, mensage: mensage.value, room: numroom});
+			
+			mensage.value = '';
+			return false;
+			    };
+
+
+$('#buttonchat').click(function(){
+var positionchat = $('#cchat').css('top');
+if(positionchat != '0px') { 
+			$('#cchat').animate({
+			top: '0px',
+			}, 300, function() {
+			$("#buttonchat").css({"-webkit-animation":"none","animation":"none"});
+			// Animation complete.
+			});
+		      } else { 
+			$('#cchat').animate({
+			top: '-190px'
+			}, 300, function() {
+			// Animation complete.
+			});
+		      }
+})
+
+
+
+$('#button').click(function(){
+  //websocket.emit("adduser", "player1");
+var nick = $("#nickname").val();
+websocket.emit("nickname", nick);
+//Fullscreen
+var elem = document.getElementById("game");
+
+if(elem.webkitRequestFullScreen) {
+elem.webkitRequestFullScreen(elem.ALLOW_KEYBOARD_INPUT); }
+else if(elem.mozRequestFullScreen) { 
+elem.mozRequestFullScreen();
+}
+
+});
+
+$("#fullscreen").click(function(){
+var elem = document.getElementById("game");
+
+if((window.fullScreen) ||
+   (window.innerWidth == screen.width && window.innerHeight == screen.height)) {
+
+if(document.webkitCancelFullScreen) {
+document.webkitCancelFullScreen(); }
+else if(document.mozCancelFullScreen) {
+document.mozCancelFullScreen(); }
+
+} else {
+      if(elem.webkitRequestFullScreen) {
+      elem.webkitRequestFullScreen(elem.ALLOW_KEYBOARD_INPUT); }
+      else if(elem.mozRequestFullScreen) { 
+      elem.mozRequestFullScreen();
+      }
+
+  }
+
+
+
+});
+
+$("#informacion").click(function() {
+
+$("#info").fadeIn('slow', function(){
+$("#info").css({"display":"inherit"});
+});
+});
+
+$("#closeinfo").click(function() {
+$("#info").fadeOut('slow', function(){
+$("#info").css({"display":"none"});
+});
+});
+
+
+$('#buttonnewroom').click(function(){
+websocket.emit("newroom", "nueva");
+$('#rooms').hide();
+});
+
+
+var ancho = $('#intro').width(), 
+			    alto  = $('#intro').height();
+
+			var angulo = 60,
+				ratio  = ancho / alto,
+				cerca  = 0.1,
+				lejos  = 10000;
+
+			var escenario = $('#intro');
+
+			var miRender = new THREE.WebGLRenderer();
+			
+			var miCamara = new THREE.PerspectiveCamera(angulo, ratio, cerca, lejos);
+
+			var miEscena = new THREE.Scene();
+			
+			miRender.shadowMapEnabled = true;
+
+			miCamara.position.x = 0;
+			miCamara.position.y = 0;
+			miCamara.position.z = 0;
+
+			miRender.setSize(ancho, alto);
+
+			escenario.append(miRender.domElement);
+
+			var materialsuelo = new THREE.MeshLambertMaterial({color: 0xebebeb});
+			var material_cubo = new THREE.MeshLambertMaterial({color: 0xff0000, transparent:true, opacity: 0});
+			var material_cubo2 = new THREE.MeshLambertMaterial({color: 0x002f8c});
+			var material_cubo3 = new THREE.MeshLambertMaterial({color: 0xffff00});
+			var material_cubo4 = new THREE.MeshLambertMaterial({color: 0x15ff00});
+			var material_cubo5 = new THREE.MeshLambertMaterial({color: 0xff00ee});
+			var material2 = new THREE.MeshLambertMaterial({color: 0xff0000});
+			var materialbloque = new THREE.MeshLambertMaterial({color: 0xffffff});
+			var materialbomba = new THREE.MeshLambertMaterial({color: 0x000000});
+			var materialfuegobomba = new THREE.MeshLambertMaterial({color: 0xff0000, transparent: true, opacity: 0.3});
+			var materialcubebomba = new THREE.MeshLambertMaterial({color: 0xffffff, transparent: true, opacity: 0});
+			var materialbloquerompible =  new THREE.MeshLambertMaterial({color: 0xFFFFFF, map: THREE.ImageUtils.loadTexture('img/Tocho.jpg')});
+			/* SUELO */
+
+			var suelo = new THREE.Mesh(new THREE.CubeGeometry(260, 10, 220), materialsuelo);
+			suelo.position.x = 0;
+			suelo.position.y = 0;
+			suelo.position.z = 0;
+
+			suelo.castShadow = suelo.receiveShadow = true;
+var material_marron = new THREE.MeshLambertMaterial({color: 0x9c4b05});
+var material_marron_oscuro = new THREE.MeshLambertMaterial({color: 0x402a19});
+var material_blanco = new THREE.MeshLambertMaterial({color: 0xffffff});
+var material_negro = new THREE.MeshLambertMaterial({color: 0x000000});
+var material_rojo = new THREE.MeshLambertMaterial({color: 0xff0000});
+var material_rosa = new THREE.MeshLambertMaterial({color: 0xf694ff});
+var material_naranja = new THREE.MeshLambertMaterial({color: 0xff9900});
+var material_amarillo = new THREE.MeshLambertMaterial({color: 0xffff00});
+var material_azul = new THREE.MeshLambertMaterial({color: 0x0033ff});
+var material_gris = new THREE.MeshLambertMaterial({color: 0xbababa});
+
+
+
+var cabeza = new THREE.Mesh(new THREE.SphereGeometry(10, 28, 28), material_marron);
+		        cabeza.position.x = 0;
+			cabeza.position.y = 15;
+			cabeza.position.z = 0;
+
+		
+
+var pierna1 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_marron);
+	      pierna1.position.x = -3;
+	      pierna1.position.y = -10;
+	      pierna1.position.z = 0;
+
+var pierna2 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_marron);
+	      pierna2.position.x = 3;
+	      pierna2.position.y = -10;
+	      pierna2.position.z = 0;
+
+var mano1 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_marron);
+		        mano1.position.x = -10;
+			mano1.position.y = 0;
+			mano1.position.z = 0;
+
+var mano2 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_marron);
+		        mano2.position.x = 10;
+			mano2.position.y = 0;
+			mano2.position.z = 0;
+
+var oreja = new THREE.Mesh(new THREE.CylinderGeometry(3, 3, 1.5,28), material_marron);
+	    oreja.position.x = 7.5;
+	    oreja.position.y = 20;
+	    oreja.position.z = 0;
+	    oreja.rotation.x = 180 * Math.PI/360;
+
+var orejadentro = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 1.5,28), material_rojo);
+	    orejadentro.position.x = 7.5;
+	    orejadentro.position.y = 20;
+	    orejadentro.position.z = 0.1;
+	    orejadentro.rotation.x = 180 * Math.PI/360;
+
+var orejadentro2 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 1.5,28), material_rojo);
+	    orejadentro2.position.x = -7.5;
+	    orejadentro2.position.y = 20;
+	    orejadentro2.position.z = 0.1;
+	    orejadentro2.rotation.x = 180 * Math.PI/360;
+
+var oreja2 = new THREE.Mesh(new THREE.CylinderGeometry(3, 3, 1.5,28), material_marron);
+	    oreja2.position.x = -7.5;
+	    oreja2.position.y = 20;
+	    oreja2.position.z = 0;
+	    oreja2.rotation.x = 180 * Math.PI/360;	 
+	    
+var ojo = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo.position.x = -4;
+			ojo.position.y = 16;
+			ojo.position.z = 8;
+
+var ojo2 = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo2.position.x = 4;
+			ojo2.position.y = 16;
+			ojo2.position.z = 8;
+
+var puntoojo = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo.position.x = 4.5;
+			puntoojo.position.y = 16;
+			puntoojo.position.z = 9.5;
+
+var puntoojo2 = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo2.position.x = -4.5;
+			puntoojo2.position.y = 16;
+			puntoojo2.position.z = 9.5;
+
+var nariz = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_negro);
+		        nariz.position.x = 0;
+			nariz.position.y = 13;
+			nariz.position.z = 9;
+			nariz.scale.x = 1.3;
+			nariz.scale.y = 0.8;
+
+var boca = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, 1.5,28), material_rojo);
+	    boca.position.x = 0;
+	    boca.position.y = 10;
+	    boca.position.z = 8;
+	    //boca.scale.x = 1.5;
+	    boca.rotation.x = 240 * Math.PI/360;	 
+
+
+var munye1 =  new THREE.Mesh(new THREE.CylinderGeometry(5, 10, 15,28), material_cubo4);
+			munye1.add(cabeza);
+			munye1.add(pierna1);
+			munye1.add(pierna2);
+			munye1.add(mano1);
+			munye1.add(mano2);
+			munye1.add(oreja);
+			munye1.add(oreja2);
+			munye1.add(orejadentro);
+			munye1.add(orejadentro2);
+			munye1.add(ojo);
+			munye1.add(ojo2);
+			munye1.add(puntoojo);
+			munye1.add(puntoojo2);
+			munye1.add(nariz);
+			munye1.add(boca);
+		        munye1.position.x = 0;
+			munye1.position.y = 17.5;
+			munye1.position.z = 0;
+
+			//munye1.castShadow = munye1.receiveShadow = true;
+
+//miEscena.add(munye1);
+
+
+
+var cabeza = new THREE.Mesh(new THREE.SphereGeometry(10, 28, 28), material_rosa);
+		        cabeza.position.x = 0;
+			cabeza.position.y = 15;
+			cabeza.position.z = 0;
+
+		
+
+var pierna1 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_rosa);
+	      pierna1.position.x = -3;
+	      pierna1.position.y = -10;
+	      pierna1.position.z = 0;
+
+var pierna2 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_rosa);
+	      pierna2.position.x = 3;
+	      pierna2.position.y = -10;
+	      pierna2.position.z = 0;
+
+var mano1 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_rosa);
+		        mano1.position.x = -10;
+			mano1.position.y = 0;
+			mano1.position.z = 0;
+
+var mano2 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_rosa);
+		        mano2.position.x = 10;
+			mano2.position.y = 0;
+			mano2.position.z = 0;
+
+var oreja = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_rosa);
+	    oreja.position.x = 5.5;
+	    oreja.position.y = 22;
+	    oreja.position.z = 0;
+	    oreja.rotation.z = 25 * Math.PI/360;
+
+var orejadentro = new THREE.Mesh(new THREE.CubeGeometry(5, 5, 2), material_rojo);
+	    orejadentro.position.x = 5.5;
+	    orejadentro.position.y = 22;
+	    orejadentro.position.z = 0.1;
+	    orejadentro.rotation.z = 25 * Math.PI/360;
+
+var orejadentro2 = new THREE.Mesh(new THREE.CubeGeometry(5, 5, 2), material_rojo);
+	    orejadentro2.position.x = -5.5;
+	    orejadentro2.position.y = 22;
+	    orejadentro2.position.z = 0.1;
+	    orejadentro2.rotation.z = -25 * Math.PI/360;
+
+var oreja2 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_rosa);
+	    oreja2.position.x = -5.5;
+	    oreja2.position.y = 22;
+	    oreja2.position.z = 0;
+	    oreja2.rotation.z = -25 * Math.PI/360;
+
+
+
+var ojo = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo.position.x = -4;
+			ojo.position.y = 16;
+			ojo.position.z = 8;
+
+var ojo2 = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo2.position.x = 4;
+			ojo2.position.y = 16;
+			ojo2.position.z = 8;
+
+var puntoojo = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo.position.x = 4.5;
+			puntoojo.position.y = 16;
+			puntoojo.position.z = 9.5;
+
+var puntoojo2 = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo2.position.x = -4.5;
+			puntoojo2.position.y = 16;
+			puntoojo2.position.z = 9.5;
+
+var boca = new THREE.Mesh(new THREE.CylinderGeometry(3, 3, 1.5,28), material_rosa);
+	    boca.position.x = 0;
+	    boca.position.y = 11;
+	    boca.position.z = 9;
+	    boca.scale.x = 1.5;
+	    boca.rotation.x = 240 * Math.PI/360;	 
+
+var boca1 = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 1.5,28), material_negro);
+	    boca1.position.x = -1.5;
+	    boca1.position.y = 11;
+	    boca1.position.z = 9.5;
+	    boca1.scale.z = 2;
+	    boca1.scale.x = 0.5;
+	    boca1.rotation.x = 240 * Math.PI/360;
+
+var boca2 = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 1.5,28), material_negro);
+	    boca2.position.x = 1.5;
+	    boca2.position.y = 11;
+	    boca2.position.z = 9.5;
+	    boca2.scale.z = 2;
+	    boca2.scale.x = 0.5;
+	    boca2.rotation.x = 240 * Math.PI/360;
+
+var munye2 =  new THREE.Mesh(new THREE.CylinderGeometry(5, 10, 15, 28), material_rojo);
+			munye2.add(cabeza);
+			munye2.add(pierna1);
+			munye2.add(pierna2);
+			munye2.add(mano1);
+			munye2.add(mano2);
+			munye2.add(oreja);
+			munye2.add(oreja2);
+			munye2.add(orejadentro);
+			munye2.add(orejadentro2);
+			munye2.add(ojo);
+			munye2.add(ojo2);
+			munye2.add(puntoojo);
+			munye2.add(puntoojo2);
+			munye2.add(boca);
+			munye2.add(boca1);
+			munye2.add(boca2)
+		        munye2.position.x = 0;
+			munye2.position.y = 17.5;
+			munye2.position.z = 0;
+
+			//munye1.castShadow = munye1.receiveShadow = true;
+
+//miEscena.add(munye2);
+
+
+
+var cabeza = new THREE.Mesh(new THREE.SphereGeometry(10, 28, 28), material_naranja);
+		        cabeza.position.x = 0;
+			cabeza.position.y = 15;
+			cabeza.position.z = 0;
+
+		
+
+var pierna1 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_naranja);
+	      pierna1.position.x = -3;
+	      pierna1.position.y = -10;
+	      pierna1.position.z = 0;
+
+var pierna2 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_naranja);
+	      pierna2.position.x = 3;
+	      pierna2.position.y = -10;
+	      pierna2.position.z = 0;
+
+var mano1 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_naranja);
+		        mano1.position.x = -10;
+			mano1.position.y = 0;
+			mano1.position.z = 0;
+
+var mano2 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_naranja);
+		        mano2.position.x = 10;
+			mano2.position.y = 0;
+			mano2.position.z = 0;
+
+var oreja = new THREE.Mesh(new THREE.CylinderGeometry(4, 4, 1.5,28), material_naranja);
+	    oreja.position.x = 7.5;
+	    oreja.position.y = 20;
+	    oreja.position.z = 0;
+	    oreja.rotation.x = 180 * Math.PI/360;
+
+var orejadentro = new THREE.Mesh(new THREE.CylinderGeometry(3.5, 3.5, 1.5,28), material_rojo);
+	    orejadentro.position.x = 7.5;
+	    orejadentro.position.y = 20;
+	    orejadentro.position.z = 0.1;
+	    orejadentro.rotation.x = 180 * Math.PI/360;
+
+var orejadentro2 = new THREE.Mesh(new THREE.CylinderGeometry(3.5, 3.5, 1.5,28), material_rojo);
+	    orejadentro2.position.x = -7.5;
+	    orejadentro2.position.y = 20;
+	    orejadentro2.position.z = 0.1;
+	    orejadentro2.rotation.x = 180 * Math.PI/360;
+
+var oreja2 = new THREE.Mesh(new THREE.CylinderGeometry(4, 4, 1.5,28), material_naranja);
+	    oreja2.position.x = -7.5;
+	    oreja2.position.y = 20;
+	    oreja2.position.z = 0;
+	    oreja2.rotation.x = 180 * Math.PI/360;	 
+	    
+var ojo = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo.position.x = -4;
+			ojo.position.y = 16;
+			ojo.position.z = 8;
+
+var ojo2 = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo2.position.x = 4;
+			ojo2.position.y = 16;
+			ojo2.position.z = 8;
+
+var puntoojo = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo.position.x = 4.5;
+			puntoojo.position.y = 16;
+			puntoojo.position.z = 9.5;
+
+var puntoojo2 = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo2.position.x = -4.5;
+			puntoojo2.position.y = 16;
+			puntoojo2.position.z = 9.5;
+
+var barba1 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba1.position.x = 5.5;
+	    barba1.position.y = 22;
+	    barba1.position.z = 2;
+	    barba1.rotation.z = 25 * Math.PI/360;
+
+var barba2 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba2.position.x = 8;
+	    barba2.position.y = 18;
+	    barba2.position.z = 2;
+	    barba2.rotation.z = 90 * Math.PI/360;
+	    
+var barba3 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba3.position.x = 8;
+	    barba3.position.y = 14;
+	    barba3.position.z = 2;
+	    barba3.rotation.z = 90 * Math.PI/360;
+
+var barba4 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba4.position.x = 5.5;
+	    barba4.position.y = 10;
+	    barba4.position.z = 2;
+	    barba4.rotation.z = 25 * Math.PI/360;
+
+var barba12 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba12.position.x = -5.5;
+	    barba12.position.y = 22;
+	    barba12.position.z = 2;
+	    barba12.rotation.z = -25 * Math.PI/360;
+
+var barba22 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba22.position.x = -8;
+	    barba22.position.y = 18;
+	    barba22.position.z = 2;
+	    barba22.rotation.z = 90 * Math.PI/360;
+	    
+var barba32 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba32.position.x = -8;
+	    barba32.position.y = 14;
+	    barba32.position.z = 2;
+	    barba32.rotation.z = 90 * Math.PI/360;
+
+var barba42 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba42.position.x = -5.5;
+	    barba42.position.y = 10;
+	    barba42.position.z = 2;
+	    barba42.rotation.z = -25 * Math.PI/360;
+var barba = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba.position.x = 0;
+	    barba.position.y = 24;
+	    barba.position.z = 2;
+	    barba.rotation.z = 90 * Math.PI/360;
+
+
+	var points = [	// VECTOR 3         X   Y   Z
+					new THREE.Vector3( 1, 0, 0 ),
+					new THREE.Vector3( 1, 0, 2),
+					new THREE.Vector3( 0, 2, 0 ),
+					new THREE.Vector3( 0, 2, 2),
+					new THREE.Vector3( 2, 2, 0 ),
+					new THREE.Vector3( 2, 2, 2)		
+				];
+
+var nariz = new THREE.Mesh(new THREE.ConvexGeometry( points),material_negro);
+			//var nuestrapuerta2 =  new THREE.Mesh(new THREE.CubeGeometry(50,2000,10),material);
+			nariz.position.x = -1;
+			nariz.position.y = 11;
+			nariz.position.z = 8;
+
+
+	var points = [	// VECTOR 3         X   Y   Z
+					new THREE.Vector3( 0.5, 0, 0 ),
+					new THREE.Vector3( 0.5, 0, 0.5),
+					new THREE.Vector3( 0, 2, 0 ),
+					new THREE.Vector3( 0, 2, 0.5),
+					new THREE.Vector3( 1, 2, 0 ),
+					new THREE.Vector3( 1, 2, 0.5)	
+		      ];
+  
+var colmillo = new THREE.Mesh(new THREE.ConvexGeometry( points),material_blanco);
+			//var nuestrapuerta2 =  new THREE.Mesh(new THREE.CubeGeometry(50,2000,10),material);
+			colmillo.position.x = -3;
+			colmillo.position.y = 8;
+			colmillo.position.z = 8;
+
+var colmillo2 = new THREE.Mesh(new THREE.ConvexGeometry( points),material_blanco);
+			//var nuestrapuerta2 =  new THREE.Mesh(new THREE.CubeGeometry(50,2000,10),material);
+			colmillo2.position.x = 2;
+			colmillo2.position.y = 8;
+			colmillo2.position.z = 8;
+
+var boca = new THREE.Mesh(new THREE.CubeGeometry(5, 0.5, 0.5), material_rojo);
+	    boca.position.x = 0;
+	    boca.position.y = 9.7;
+	    boca.position.z = 8.2;
+
+
+var munye3 =  new THREE.Mesh(new THREE.CylinderGeometry(5, 10, 15, 28), material_azul);
+			munye3.add(cabeza);
+			munye3.add(pierna1);
+			munye3.add(pierna2);
+			munye3.add(mano1);
+			munye3.add(mano2);
+			munye3.add(oreja);
+			munye3.add(oreja2);
+			munye3.add(orejadentro);
+			munye3.add(orejadentro2);
+			munye3.add(ojo);
+			munye3.add(ojo2);
+			munye3.add(puntoojo);
+			munye3.add(puntoojo2);
+			munye3.add(barba1);
+			munye3.add(barba2);
+			munye3.add(barba3);
+			munye3.add(barba4);
+			munye3.add(barba12);
+			munye3.add(barba22);
+			munye3.add(barba32);
+			munye3.add(barba42);
+			munye3.add(barba);
+			munye3.add(nariz);
+			munye3.add(colmillo);
+			munye3.add(colmillo2);
+			munye3.add(boca);
+		        munye3.position.x = 0;
+			munye3.position.y = 17.5;
+			munye3.position.z = 0;
+
+var cabeza = new THREE.Mesh(new THREE.SphereGeometry(10, 28, 28), material_blanco);
+		        cabeza.position.x = 0;
+			cabeza.position.y = 15;
+			cabeza.position.z = 0;
+
+		
+
+var pierna1 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_blanco);
+	      pierna1.position.x = -3;
+	      pierna1.position.y = -10;
+	      pierna1.position.z = 0;
+
+var pierna2 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_blanco);
+	      pierna2.position.x = 3;
+	      pierna2.position.y = -10;
+	      pierna2.position.z = 0;
+
+var mano1 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_blanco);
+		        mano1.position.x = -10;
+			mano1.position.y = 0;
+			mano1.position.z = 0;
+
+var mano2 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_blanco);
+		        mano2.position.x = 10;
+			mano2.position.y = 0;
+			mano2.position.z = 0;
+
+var oreja = new THREE.Mesh(new THREE.CylinderGeometry(4, 4, 1.5,28), material_negro);
+	    oreja.position.x = 7.5;
+	    oreja.position.y = 20;
+	    oreja.position.z = 0;
+	    oreja.rotation.x = 180 * Math.PI/360;
+
+var orejadentro = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 1.5,28), material_blanco);
+	    orejadentro.position.x = 7.5;
+	    orejadentro.position.y = 20;
+	    orejadentro.position.z = 0.1;
+	    orejadentro.rotation.x = 180 * Math.PI/360;
+
+var orejadentro2 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 1.5,28), material_blanco);
+	    orejadentro2.position.x = -7.5;
+	    orejadentro2.position.y = 20;
+	    orejadentro2.position.z = 0.1;
+	    orejadentro2.rotation.x = 180 * Math.PI/360;
+
+var oreja2 = new THREE.Mesh(new THREE.CylinderGeometry(4, 4, 1.5,28), material_negro);
+	    oreja2.position.x = -7.5;
+	    oreja2.position.y = 20;
+	    oreja2.position.z = 0;
+	    oreja2.rotation.x = 180 * Math.PI/360;	
+
+var manchaojo = new THREE.Mesh(new THREE.SphereGeometry(3.5, 28, 28), material_negro);
+		        manchaojo.position.x = -3.5;
+			manchaojo.position.y = 16;
+			manchaojo.position.z = 6.25;
+
+var manchaojo2 = new THREE.Mesh(new THREE.SphereGeometry(3.5, 28, 28), material_negro);
+		        manchaojo2.position.x = 3.5;
+			manchaojo2.position.y = 16;
+			manchaojo2.position.z = 6.25; 
+	    
+var ojo = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo.position.x = -4;
+			ojo.position.y = 16;
+			ojo.position.z = 8;
+
+var ojo2 = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo2.position.x = 4;
+			ojo2.position.y = 16;
+			ojo2.position.z = 8;
+
+var puntoojo = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo.position.x = 4.5;
+			puntoojo.position.y = 16;
+			puntoojo.position.z = 9.5;
+
+var puntoojo2 = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo2.position.x = -4.5;
+			puntoojo2.position.y = 16;
+			puntoojo2.position.z = 9.5;
+
+var nariz = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_negro);
+		        nariz.position.x = 0;
+			nariz.position.y = 13;
+			nariz.position.z = 9;
+			nariz.scale.x = 1.3;
+			nariz.scale.y = 0.8;
+
+var boca = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, 1.5,28), material_rojo);
+	    boca.position.x = 0;
+	    boca.position.y = 10;
+	    boca.position.z = 8;
+	    boca.scale.x = 0.5;
+	    boca.scale.z = 0.5;
+	    boca.rotation.x = 240 * Math.PI/360;	 
+
+
+var munye4 =  new THREE.Mesh(new THREE.CylinderGeometry(5, 10, 15,28), material_negro);
+			munye4.add(cabeza);
+			munye4.add(pierna1);
+			munye4.add(pierna2);
+			munye4.add(mano1);
+			munye4.add(mano2);
+			munye4.add(oreja);
+			munye4.add(oreja2);
+			//munye4.add(orejadentro);
+			//munye4.add(orejadentro2);
+			munye4.add(manchaojo);
+			munye4.add(manchaojo2);
+			munye4.add(ojo);
+			munye4.add(ojo2);
+			munye4.add(puntoojo);
+			munye4.add(puntoojo2);
+			munye4.add(nariz);
+			munye4.add(boca);
+		        munye4.position.x = 0;
+			munye4.position.y = 17.5;
+			munye4.position.z = 0;
+
+var cabeza = new THREE.Mesh(new THREE.SphereGeometry(10, 28, 28), material_marron_oscuro);
+		        cabeza.position.x = 0;
+			cabeza.position.y = 15;
+			cabeza.position.z = 0;
+
+		
+
+var pierna1 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_marron_oscuro);
+	      pierna1.position.x = -3;
+	      pierna1.position.y = -10;
+	      pierna1.position.z = 0;
+
+var pierna2 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_marron_oscuro);
+	      pierna2.position.x = 3;
+	      pierna2.position.y = -10;
+	      pierna2.position.z = 0;
+
+var mano1 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_marron_oscuro);
+		        mano1.position.x = -10;
+			mano1.position.y = 0;
+			mano1.position.z = 0;
+
+var mano2 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_marron_oscuro);
+		        mano2.position.x = 10;
+			mano2.position.y = 0;
+			mano2.position.z = 0;
+
+var oreja = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, 1.5,28), material_marron);
+	    oreja.position.x = 11;
+	    oreja.position.y = 16;
+	    oreja.position.z = 0;
+	    oreja.rotation.x = 180 * Math.PI/360;
+
+var orejadentro = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, 1.5,28), material_rojo);
+	    orejadentro.position.x = 11;
+	    orejadentro.position.y = 16;
+	    orejadentro.position.z = 0.1;
+	    orejadentro.rotation.x = 180 * Math.PI/360;
+
+var orejadentro2 = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, 1.5,28), material_rojo);
+	    orejadentro2.position.x = -11;
+	    orejadentro2.position.y = 16;
+	    orejadentro2.position.z = 0.1;
+	    orejadentro2.rotation.x = 180 * Math.PI/360;
+
+var oreja2 = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, 1.5,28), material_marron);
+	    oreja2.position.x = -11;
+	    oreja2.position.y = 16;
+	    oreja2.position.z = 0;
+	    oreja2.rotation.x = 180 * Math.PI/360;	 
+
+var manchaojo = new THREE.Mesh(new THREE.SphereGeometry(5, 28, 28), material_marron);
+		        manchaojo.position.x = -3;
+			manchaojo.position.y = 16;
+			manchaojo.position.z = 6;
+
+var manchaojo2 = new THREE.Mesh(new THREE.SphereGeometry(5, 28, 28), material_marron);
+		        manchaojo2.position.x = 3;
+			manchaojo2.position.y = 16;
+			manchaojo2.position.z = 6; 
+	    
+var ojo = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo.position.x = -4;
+			ojo.position.y = 16;
+			ojo.position.z = 10;
+
+var ojo2 = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo2.position.x = 4;
+			ojo2.position.y = 16;
+			ojo2.position.z = 10;
+
+var puntoojo = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo.position.x = 4;
+			puntoojo.position.y = 16;
+			puntoojo.position.z = 11.75;
+
+var puntoojo2 = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo2.position.x = -4;
+			puntoojo2.position.y = 16;
+			puntoojo2.position.z = 11.75;
+
+var boca = new THREE.Mesh(new THREE.CylinderGeometry(3, 3, 1.5,28), material_marron);
+	    boca.position.x = 0;
+	    boca.position.y = 11;
+	    boca.position.z = 9;
+	    boca.scale.x = 1.5;
+	    boca.rotation.x = 240 * Math.PI/360;	 
+
+var agujerosnariz = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 1.5,28), material_marron);
+	    agujerosnariz.position.x = 0;
+	    agujerosnariz.position.y = 13.5;
+	    agujerosnariz.position.z = 10.4;
+	    agujerosnariz.scale.x = 1.5;
+	    agujerosnariz.rotation.x = 240 * Math.PI/360;
+
+var puntonariz = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.25, 0.5,28), material_negro);
+	    puntonariz.position.x = 0.5;
+	    puntonariz.position.y = 13.5;
+	    puntonariz.position.z = 11.1;
+	    puntonariz.rotation.x = 240 * Math.PI/360;
+
+var puntonariz2 = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.25, 0.5,28), material_negro);
+	    puntonariz2.position.x = -0.5;
+	    puntonariz2.position.y = 13.5;
+	    puntonariz2.position.z = 11.1;
+	    puntonariz2.rotation.x = 240 * Math.PI/360;
+
+var bocalengua = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, 1.5,28), material_rojo);
+	    bocalengua.position.x = 0;
+	    bocalengua.position.y = 11;
+	    bocalengua.position.z = 9.1;
+	    bocalengua.scale.x = 1.5;
+	    bocalengua.scale.z = 0.5;
+	    bocalengua.rotation.x = 240 * Math.PI/360;
+
+var munye5 =  new THREE.Mesh(new THREE.CylinderGeometry(5, 10, 15,28), material_amarillo);
+			munye5.add(cabeza);
+			munye5.add(pierna1);
+			munye5.add(pierna2);
+			munye5.add(mano1);
+			munye5.add(mano2);
+			munye5.add(oreja);
+			munye5.add(oreja2);
+			munye5.add(orejadentro);
+			munye5.add(orejadentro2);
+			munye5.add(manchaojo);
+			munye5.add(manchaojo2)
+			munye5.add(ojo);
+			munye5.add(ojo2);
+			munye5.add(puntoojo);
+			munye5.add(puntoojo2);
+			munye5.add(boca);
+			munye5.add(bocalengua);
+			munye5.add(agujerosnariz);
+			munye5.add(puntonariz);
+			munye5.add(puntonariz2);
+		        munye5.position.x = 0;
+			munye5.position.y = 17.5;
+			munye5.position.z = 0;
+
+		var luz = new THREE.SpotLight(0xFFFFFF);
+
+			luz.position.x = 0;
+			luz.position.y = 500;
+			luz.position.z = 0;
+			luz.castShadow = true;
+			
+		
+			miEscena.add(luz);
+			
+			var luz2 = new THREE.SpotLight(0xFFFFFF);
+
+			luz2.position.x = 0;
+			luz2.position.y = 00;
+			luz2.position.z = 0;
+			luz2.castShadow = true;
+			
+		
+			miEscena.add(luz2);
+var bombaarriba = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, 2,28), materialbomba);
+	    bombaarriba.position.x = 0;
+	    bombaarriba.position.y = 10;
+	    bombaarriba.position.z = 0;
+
+var bombamecha = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 4,28), material_gris);
+	    bombamecha.position.x = 0;
+	    bombamecha.position.y = 11;
+	    bombamecha.position.z = 0;
+
+var bombafuejo = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_rojo);
+		        bombafuejo.position.x = 0;
+			bombafuejo.position.y = 14;
+			bombafuejo.position.z = 0;
+
+var ojobomba = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojobomba.position.x = -4;
+			ojobomba.position.y = 5;
+			ojobomba.position.z = 7;
+
+var ojobomba2 = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojobomba2.position.x = 4;
+			ojobomba2.position.y = 5;
+			ojobomba2.position.z = 7;
+
+var puntoojobomba = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojobomba.position.x = 4.5;
+			puntoojobomba.position.y = 5;
+			puntoojobomba.position.z = 8.5;
+
+var puntoojobomba2 = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojobomba2.position.x = -4.5;
+			puntoojobomba2.position.y = 5;
+			puntoojobomba2.position.z = 8.5;
+	   
+
+var bomba = new THREE.Mesh(new THREE.SphereGeometry(10, 28, 28), materialbomba);
+			bomba.add(bombaarriba);
+			bomba.add(bombamecha);
+			bomba.add(bombafuejo);
+			bomba.add(ojobomba);
+			bomba.add(ojobomba2);
+			bomba.add(puntoojobomba);
+			bomba.add(puntoojobomba2);
+		        bomba.position.x = 0;
+			bomba.position.y = 0;
+			bomba.position.z = 50;
+
+miEscena.add(bomba);
+
+			munye1.position.x = 40;
+			munye1.position.y = 0;
+			munye1.position.z = 40;
+			munye1.rotation.y = -150 * Math.PI/360;
+			
+			munye2.position.x = -25;
+			munye2.position.y = 0;
+			munye2.position.z = 15;
+			munye2.rotation.y = 90 * Math.PI/360;
+			
+			munye3.position.x = -40;
+			munye3.position.y = 0;
+			munye3.position.z = 40;
+			munye3.rotation.y = 150 * Math.PI/360;
+			
+			munye4.position.x = 25;
+			munye4.position.y = 0;
+			munye4.position.z = 15;
+			munye4.rotation.y = -90 * Math.PI/360;
+			
+			munye5.position.x = 0;
+			munye5.position.y = 0;
+			munye5.position.z = 0;
+			//munye5.rotation.y = -150 * Math.PI/360;
+
+
+
+			miEscena.add(munye1);
+			miEscena.add(munye2);
+			miEscena.add(munye3);
+			miEscena.add(munye4);
+			miEscena.add(munye5);
+			
+				
+			//miEscena.add(suelo);
+			
+			
+		var materialtext	 = new THREE.MeshLambertMaterial({color: 0xbababa});	
+		var text3d = new THREE.TextGeometry( "AnimalsBomb!", {
+
+					size: 15,
+					height: 10,
+					curveSegments: 28,
+					font: "helvetiker"
+
+				});
+		
+			mesh = new THREE.Mesh( text3d, materialtext );
+			text3d.computeBoundingBox();
+			
+			//mesh.rotation.y = 360 * Math.PI/360;
+			mesh.position.x = (text3d.boundingBox.max.x / 2) - text3d.boundingBox.max.x;
+			mesh.position.y = 40;
+			mesh.position.z = text3d.boundingBox.max.z / 2;
+			miEscena.add(mesh);	
+		
+		
+			miEscena.add(miCamara);
+			
+			animarte();
+			function animarte(){
+				
+
+				
+				miCamara.position.x = 0;
+				miCamara.position.y = 50;
+				miCamara.position.z = 125;
+				
+				luz2.position.x = miCamara.position.x;
+				luz2.position.y = miCamara.position.y;
+				luz2.position.z = miCamara.position.z;
+				
+				miCamara.lookAt(suelo.position);
+				  
+
+				miRender.render(miEscena, miCamara);
+				window.requestAnimationFrame(animarte);
+				}
+
+</script>
+<script type="text/javascript">
+
+var left = false;
+var right = false;
+var up = false;
+var down = false;
+var jump = false;
+var gravedad = 1;
+var speed = 1;
+var bomb = false;
+var bombnumber = 1;
+var fuegobomba1;
+var fuegobomba2;
+var fuegobomba3;
+var user;
+var vivo = true;
+var stats = new Stats();
+
+stats.setMode(0); // 0: fps, 1: ms
+
+// Align top-left
+stats.domElement.style.position = 'absolute';
+stats.domElement.style.left = '0px';
+stats.domElement.style.bottom = '0px';
+
+document.body.appendChild( stats.domElement );
+
+var collidableMeshList = [];
+var collisionbomb = [];
+var collisionbloquerompible = [];
+
+			var ancho = $('#escenario').width(), 
+			    alto  = $('#escenario').height();
+
+			var angulo = 60,
+				ratio  = ancho / alto,
+				cerca  = 0.1,
+				lejos  = 10000;
+
+			var escenario = $('#escenario');
+
+			var miRender = new THREE.WebGLRenderer({precision: "lowp"});
+			
+			var miCamara = new THREE.PerspectiveCamera(angulo, ratio, cerca, lejos);
+
+			var miEscena = new THREE.Scene();
+			
+			miRender.shadowMapEnabled = true;
+
+			miCamara.position.x = 0;
+			miCamara.position.y = 0;
+			miCamara.position.z = 0;
+
+			miRender.setSize(ancho, alto);
+
+			escenario.append(miRender.domElement);
+
+			var materialsuelo = new THREE.MeshLambertMaterial({color: 0xebebeb});
+			var material_cubo = new THREE.MeshLambertMaterial({color: 0xff0000, transparent:true, opacity: 0});
+			var material_cubo2 = new THREE.MeshLambertMaterial({color: 0x002f8c});
+			var material_cubo3 = new THREE.MeshLambertMaterial({color: 0xffff00});
+			var material_cubo4 = new THREE.MeshLambertMaterial({color: 0x15ff00});
+			var material_cubo5 = new THREE.MeshLambertMaterial({color: 0xff00ee});
+			var material2 = new THREE.MeshLambertMaterial({color: 0xff0000});
+			var materialbloque = new THREE.MeshLambertMaterial({color: 0xffffff});
+			var materialbomba = new THREE.MeshLambertMaterial({color: 0x000000});
+			var materialfuegobomba = new THREE.MeshLambertMaterial({color: 0xff0000, transparent: true, opacity: 0.3});
+			var materialcubebomba = new THREE.MeshLambertMaterial({color: 0xffffff, transparent: true, opacity: 0});
+			var materialbloquerompible =  new THREE.MeshLambertMaterial({color: 0xFFFFFF, map: THREE.ImageUtils.loadTexture('img/Tocho.jpg')});
+			/* SUELO */
+
+			var suelo = new THREE.Mesh(new THREE.CubeGeometry(260, 10, 220), materialsuelo);
+			suelo.position.x = 0;
+			suelo.position.y = 0;
+			suelo.position.z = 0;
+
+			suelo.castShadow = suelo.receiveShadow = true;
+
+			/* CUBO */
+/*
+var map = [ [0,0,2,0,2,0,0,0,0,0,2,2,0,0,0], //0
+            [0,1,2,1,0,1,2,1,0,1,0,1,2,1,0], //1
+            [0,2,2,0,0,0,0,2,0,0,2,0,2,2,2], //2
+            [0,1,0,1,2,1,2,1,0,1,0,1,0,1,0], //3
+            [2,2,0,0,0,2,0,2,0,0,2,0,2,0,2], //4
+            [2,1,0,1,0,1,0,1,2,1,0,1,0,1,2], //5
+            [0,2,0,2,0,2,2,0,2,0,2,0,2,0,0], //6
+            [0,1,2,1,0,1,0,1,2,1,0,1,0,1,2], //7
+            [0,0,0,0,2,0,0,0,0,2,2,0,0,0,2], //8
+	    [0,1,0,1,0,1,2,1,0,1,0,1,0,1,0], //9
+            [0,0,2,2,2,0,2,2,2,0,2,2,2,0,2], //10
+            [0,1,2,1,0,1,2,1,2,1,0,1,0,1,2], //11         
+            [2,2,0,0,0,0,0,2,0,2,2,2,0,0,2], //12
+            [0,1,2,1,0,1,0,1,0,1,0,1,2,1,0], //13
+            [0,0,2,0,0,0,2,2,0,0,2,0,2,0,0] //14
+	  ];
+*/
+
+
+		    
+
+
+/*
+	var mesh3 = new THREE.Mesh(combined3, material3);
+  			mesh3.position.x = 345; //397.5  1.875
+			mesh3.position.y = -8.5;
+			mesh3.position.z = -717.5; //362.5  2.0138889
+			mesh3.rotation.y = 0 * Math.PI/360; // 180
+			
+
+			
+			var group =   new THREE.Mesh(new THREE.CubeGeometry(0,0,0),material3);
+			group.add( mesh3 );
+			group.position.x = -13
+			group.position.y = 8.5;// 8.5
+			group.position.z = 350;
+			group.rotation.y = 180 * Math.PI/360;
+			miEscena.add( group );
+			piezas.push(group); */
+
+/*
+loader.load("fig/bobomb.js", function( geometry, materials ) { //createScene( geometry, materials,  2000, 290, 1200, 0, 360, 0, 70 ) 
+var bomba = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial(materials) );
+				bomba.position.set( 100, 20, 100 );
+				bomba.scale.set( 5, 5, 5 );
+				bomba.rotation.x = 0 * Math.PI/360;
+				bomba.rotation.y = 0 * Math.PI/360;
+				bomba.rotation.z = 0 * Math.PI/360;
+				bomba.updateMatrix();
+				
+				miEscena.add( bomba );
+} );
+*/
+
+var material_marron = new THREE.MeshLambertMaterial({color: 0x9c4b05});
+var material_marron_oscuro = new THREE.MeshLambertMaterial({color: 0x402a19});
+var material_blanco = new THREE.MeshLambertMaterial({color: 0xffffff});
+var material_negro = new THREE.MeshLambertMaterial({color: 0x000000});
+var material_rojo = new THREE.MeshLambertMaterial({color: 0xff0000});
+var material_rosa = new THREE.MeshLambertMaterial({color: 0xf694ff});
+var material_naranja = new THREE.MeshLambertMaterial({color: 0xff9900});
+var material_amarillo = new THREE.MeshLambertMaterial({color: 0xffff00});
+var material_azul = new THREE.MeshLambertMaterial({color: 0x0033ff});
+var material_gris = new THREE.MeshLambertMaterial({color: 0xbababa});
+
+
+
+var cabeza = new THREE.Mesh(new THREE.SphereGeometry(10, 28, 28), material_marron);
+		        cabeza.position.x = 0;
+			cabeza.position.y = 15;
+			cabeza.position.z = 0;
+
+		
+
+var pierna1 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_marron);
+	      pierna1.position.x = -3;
+	      pierna1.position.y = -10;
+	      pierna1.position.z = 0;
+
+var pierna2 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_marron);
+	      pierna2.position.x = 3;
+	      pierna2.position.y = -10;
+	      pierna2.position.z = 0;
+
+var mano1 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_marron);
+		        mano1.position.x = -10;
+			mano1.position.y = 0;
+			mano1.position.z = 0;
+
+var mano2 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_marron);
+		        mano2.position.x = 10;
+			mano2.position.y = 0;
+			mano2.position.z = 0;
+
+var oreja = new THREE.Mesh(new THREE.CylinderGeometry(3, 3, 1.5,28), material_marron);
+	    oreja.position.x = 7.5;
+	    oreja.position.y = 20;
+	    oreja.position.z = 0;
+	    oreja.rotation.x = 180 * Math.PI/360;
+
+var orejadentro = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 1.5,28), material_rojo);
+	    orejadentro.position.x = 7.5;
+	    orejadentro.position.y = 20;
+	    orejadentro.position.z = 0.1;
+	    orejadentro.rotation.x = 180 * Math.PI/360;
+
+var orejadentro2 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 1.5,28), material_rojo);
+	    orejadentro2.position.x = -7.5;
+	    orejadentro2.position.y = 20;
+	    orejadentro2.position.z = 0.1;
+	    orejadentro2.rotation.x = 180 * Math.PI/360;
+
+var oreja2 = new THREE.Mesh(new THREE.CylinderGeometry(3, 3, 1.5,28), material_marron);
+	    oreja2.position.x = -7.5;
+	    oreja2.position.y = 20;
+	    oreja2.position.z = 0;
+	    oreja2.rotation.x = 180 * Math.PI/360;	 
+	    
+var ojo = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo.position.x = -4;
+			ojo.position.y = 16;
+			ojo.position.z = 8;
+
+var ojo2 = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo2.position.x = 4;
+			ojo2.position.y = 16;
+			ojo2.position.z = 8;
+
+var puntoojo = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo.position.x = 4.5;
+			puntoojo.position.y = 16;
+			puntoojo.position.z = 9.5;
+
+var puntoojo2 = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo2.position.x = -4.5;
+			puntoojo2.position.y = 16;
+			puntoojo2.position.z = 9.5;
+
+var nariz = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_negro);
+		        nariz.position.x = 0;
+			nariz.position.y = 13;
+			nariz.position.z = 9;
+			nariz.scale.x = 1.3;
+			nariz.scale.y = 0.8;
+
+var boca = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, 1.5,28), material_rojo);
+	    boca.position.x = 0;
+	    boca.position.y = 10;
+	    boca.position.z = 8;
+	    //boca.scale.x = 1.5;
+	    boca.rotation.x = 240 * Math.PI/360;	 
+
+
+var munye1 =  new THREE.Mesh(new THREE.CylinderGeometry(5, 10, 15,28), material_cubo4);
+			munye1.add(cabeza);
+			munye1.add(pierna1);
+			munye1.add(pierna2);
+			munye1.add(mano1);
+			munye1.add(mano2);
+			munye1.add(oreja);
+			munye1.add(oreja2);
+			munye1.add(orejadentro);
+			munye1.add(orejadentro2);
+			munye1.add(ojo);
+			munye1.add(ojo2);
+			munye1.add(puntoojo);
+			munye1.add(puntoojo2);
+			munye1.add(nariz);
+			munye1.add(boca);
+		        munye1.position.x = 0;
+			munye1.position.y = 17.5;
+			munye1.position.z = 0;
+
+			//munye1.castShadow = munye1.receiveShadow = true;
+
+//miEscena.add(munye1);
+
+
+
+var cabeza = new THREE.Mesh(new THREE.SphereGeometry(10, 28, 28), material_rosa);
+		        cabeza.position.x = 0;
+			cabeza.position.y = 15;
+			cabeza.position.z = 0;
+
+		
+
+var pierna1 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_rosa);
+	      pierna1.position.x = -3;
+	      pierna1.position.y = -10;
+	      pierna1.position.z = 0;
+
+var pierna2 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_rosa);
+	      pierna2.position.x = 3;
+	      pierna2.position.y = -10;
+	      pierna2.position.z = 0;
+
+var mano1 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_rosa);
+		        mano1.position.x = -10;
+			mano1.position.y = 0;
+			mano1.position.z = 0;
+
+var mano2 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_rosa);
+		        mano2.position.x = 10;
+			mano2.position.y = 0;
+			mano2.position.z = 0;
+
+var oreja = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_rosa);
+	    oreja.position.x = 5.5;
+	    oreja.position.y = 22;
+	    oreja.position.z = 0;
+	    oreja.rotation.z = 25 * Math.PI/360;
+
+var orejadentro = new THREE.Mesh(new THREE.CubeGeometry(5, 5, 2), material_rojo);
+	    orejadentro.position.x = 5.5;
+	    orejadentro.position.y = 22;
+	    orejadentro.position.z = 0.1;
+	    orejadentro.rotation.z = 25 * Math.PI/360;
+
+var orejadentro2 = new THREE.Mesh(new THREE.CubeGeometry(5, 5, 2), material_rojo);
+	    orejadentro2.position.x = -5.5;
+	    orejadentro2.position.y = 22;
+	    orejadentro2.position.z = 0.1;
+	    orejadentro2.rotation.z = -25 * Math.PI/360;
+
+var oreja2 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_rosa);
+	    oreja2.position.x = -5.5;
+	    oreja2.position.y = 22;
+	    oreja2.position.z = 0;
+	    oreja2.rotation.z = -25 * Math.PI/360;
+
+
+
+var ojo = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo.position.x = -4;
+			ojo.position.y = 16;
+			ojo.position.z = 8;
+
+var ojo2 = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo2.position.x = 4;
+			ojo2.position.y = 16;
+			ojo2.position.z = 8;
+
+var puntoojo = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo.position.x = 4.5;
+			puntoojo.position.y = 16;
+			puntoojo.position.z = 9.5;
+
+var puntoojo2 = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo2.position.x = -4.5;
+			puntoojo2.position.y = 16;
+			puntoojo2.position.z = 9.5;
+
+var boca = new THREE.Mesh(new THREE.CylinderGeometry(3, 3, 1.5,28), material_rosa);
+	    boca.position.x = 0;
+	    boca.position.y = 11;
+	    boca.position.z = 9;
+	    boca.scale.x = 1.5;
+	    boca.rotation.x = 240 * Math.PI/360;	 
+
+var boca1 = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 1.5,28), material_negro);
+	    boca1.position.x = -1.5;
+	    boca1.position.y = 11;
+	    boca1.position.z = 9.5;
+	    boca1.scale.z = 2;
+	    boca1.scale.x = 0.5;
+	    boca1.rotation.x = 240 * Math.PI/360;
+
+var boca2 = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 1.5,28), material_negro);
+	    boca2.position.x = 1.5;
+	    boca2.position.y = 11;
+	    boca2.position.z = 9.5;
+	    boca2.scale.z = 2;
+	    boca2.scale.x = 0.5;
+	    boca2.rotation.x = 240 * Math.PI/360;
+
+var munye2 =  new THREE.Mesh(new THREE.CylinderGeometry(5, 10, 15, 28), material_rojo);
+			munye2.add(cabeza);
+			munye2.add(pierna1);
+			munye2.add(pierna2);
+			munye2.add(mano1);
+			munye2.add(mano2);
+			munye2.add(oreja);
+			munye2.add(oreja2);
+			munye2.add(orejadentro);
+			munye2.add(orejadentro2);
+			munye2.add(ojo);
+			munye2.add(ojo2);
+			munye2.add(puntoojo);
+			munye2.add(puntoojo2);
+			munye2.add(boca);
+			munye2.add(boca1);
+			munye2.add(boca2)
+		        munye2.position.x = 0;
+			munye2.position.y = 17.5;
+			munye2.position.z = 0;
+
+			//munye1.castShadow = munye1.receiveShadow = true;
+
+//miEscena.add(munye2);
+
+
+
+var cabeza = new THREE.Mesh(new THREE.SphereGeometry(10, 28, 28), material_naranja);
+		        cabeza.position.x = 0;
+			cabeza.position.y = 15;
+			cabeza.position.z = 0;
+
+		
+
+var pierna1 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_naranja);
+	      pierna1.position.x = -3;
+	      pierna1.position.y = -10;
+	      pierna1.position.z = 0;
+
+var pierna2 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_naranja);
+	      pierna2.position.x = 3;
+	      pierna2.position.y = -10;
+	      pierna2.position.z = 0;
+
+var mano1 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_naranja);
+		        mano1.position.x = -10;
+			mano1.position.y = 0;
+			mano1.position.z = 0;
+
+var mano2 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_naranja);
+		        mano2.position.x = 10;
+			mano2.position.y = 0;
+			mano2.position.z = 0;
+
+var oreja = new THREE.Mesh(new THREE.CylinderGeometry(4, 4, 1.5,28), material_naranja);
+	    oreja.position.x = 7.5;
+	    oreja.position.y = 20;
+	    oreja.position.z = 0;
+	    oreja.rotation.x = 180 * Math.PI/360;
+
+var orejadentro = new THREE.Mesh(new THREE.CylinderGeometry(3.5, 3.5, 1.5,28), material_rojo);
+	    orejadentro.position.x = 7.5;
+	    orejadentro.position.y = 20;
+	    orejadentro.position.z = 0.1;
+	    orejadentro.rotation.x = 180 * Math.PI/360;
+
+var orejadentro2 = new THREE.Mesh(new THREE.CylinderGeometry(3.5, 3.5, 1.5,28), material_rojo);
+	    orejadentro2.position.x = -7.5;
+	    orejadentro2.position.y = 20;
+	    orejadentro2.position.z = 0.1;
+	    orejadentro2.rotation.x = 180 * Math.PI/360;
+
+var oreja2 = new THREE.Mesh(new THREE.CylinderGeometry(4, 4, 1.5,28), material_naranja);
+	    oreja2.position.x = -7.5;
+	    oreja2.position.y = 20;
+	    oreja2.position.z = 0;
+	    oreja2.rotation.x = 180 * Math.PI/360;	 
+	    
+var ojo = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo.position.x = -4;
+			ojo.position.y = 16;
+			ojo.position.z = 8;
+
+var ojo2 = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo2.position.x = 4;
+			ojo2.position.y = 16;
+			ojo2.position.z = 8;
+
+var puntoojo = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo.position.x = 4.5;
+			puntoojo.position.y = 16;
+			puntoojo.position.z = 9.5;
+
+var puntoojo2 = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo2.position.x = -4.5;
+			puntoojo2.position.y = 16;
+			puntoojo2.position.z = 9.5;
+
+var barba1 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba1.position.x = 5.5;
+	    barba1.position.y = 22;
+	    barba1.position.z = 2;
+	    barba1.rotation.z = 25 * Math.PI/360;
+
+var barba2 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba2.position.x = 8;
+	    barba2.position.y = 18;
+	    barba2.position.z = 2;
+	    barba2.rotation.z = 90 * Math.PI/360;
+	    
+var barba3 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba3.position.x = 8;
+	    barba3.position.y = 14;
+	    barba3.position.z = 2;
+	    barba3.rotation.z = 90 * Math.PI/360;
+
+var barba4 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba4.position.x = 5.5;
+	    barba4.position.y = 10;
+	    barba4.position.z = 2;
+	    barba4.rotation.z = 25 * Math.PI/360;
+
+var barba12 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba12.position.x = -5.5;
+	    barba12.position.y = 22;
+	    barba12.position.z = 2;
+	    barba12.rotation.z = -25 * Math.PI/360;
+
+var barba22 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba22.position.x = -8;
+	    barba22.position.y = 18;
+	    barba22.position.z = 2;
+	    barba22.rotation.z = 90 * Math.PI/360;
+	    
+var barba32 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba32.position.x = -8;
+	    barba32.position.y = 14;
+	    barba32.position.z = 2;
+	    barba32.rotation.z = 90 * Math.PI/360;
+
+var barba42 = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba42.position.x = -5.5;
+	    barba42.position.y = 10;
+	    barba42.position.z = 2;
+	    barba42.rotation.z = -25 * Math.PI/360;
+var barba = new THREE.Mesh(new THREE.CubeGeometry(6, 6, 2), material_amarillo);
+	    barba.position.x = 0;
+	    barba.position.y = 24;
+	    barba.position.z = 2;
+	    barba.rotation.z = 90 * Math.PI/360;
+
+
+	var points = [	// VECTOR 3         X   Y   Z
+					new THREE.Vector3( 1, 0, 0 ),
+					new THREE.Vector3( 1, 0, 2),
+					new THREE.Vector3( 0, 2, 0 ),
+					new THREE.Vector3( 0, 2, 2),
+					new THREE.Vector3( 2, 2, 0 ),
+					new THREE.Vector3( 2, 2, 2)		
+				];
+
+var nariz = new THREE.Mesh(new THREE.ConvexGeometry( points),material_negro);
+			//var nuestrapuerta2 =  new THREE.Mesh(new THREE.CubeGeometry(50,2000,10),material);
+			nariz.position.x = -1;
+			nariz.position.y = 11;
+			nariz.position.z = 8;
+
+
+	var points = [	// VECTOR 3         X   Y   Z
+					new THREE.Vector3( 0.5, 0, 0 ),
+					new THREE.Vector3( 0.5, 0, 0.5),
+					new THREE.Vector3( 0, 2, 0 ),
+					new THREE.Vector3( 0, 2, 0.5),
+					new THREE.Vector3( 1, 2, 0 ),
+					new THREE.Vector3( 1, 2, 0.5)	
+		      ];
+  
+var colmillo = new THREE.Mesh(new THREE.ConvexGeometry( points),material_blanco);
+			//var nuestrapuerta2 =  new THREE.Mesh(new THREE.CubeGeometry(50,2000,10),material);
+			colmillo.position.x = -3;
+			colmillo.position.y = 8;
+			colmillo.position.z = 8;
+
+var colmillo2 = new THREE.Mesh(new THREE.ConvexGeometry( points),material_blanco);
+			//var nuestrapuerta2 =  new THREE.Mesh(new THREE.CubeGeometry(50,2000,10),material);
+			colmillo2.position.x = 2;
+			colmillo2.position.y = 8;
+			colmillo2.position.z = 8;
+
+var boca = new THREE.Mesh(new THREE.CubeGeometry(5, 0.5, 0.5), material_rojo);
+	    boca.position.x = 0;
+	    boca.position.y = 9.7;
+	    boca.position.z = 8.2;
+
+
+var munye3 =  new THREE.Mesh(new THREE.CylinderGeometry(5, 10, 15, 28), material_azul);
+			munye3.add(cabeza);
+			munye3.add(pierna1);
+			munye3.add(pierna2);
+			munye3.add(mano1);
+			munye3.add(mano2);
+			munye3.add(oreja);
+			munye3.add(oreja2);
+			munye3.add(orejadentro);
+			munye3.add(orejadentro2);
+			munye3.add(ojo);
+			munye3.add(ojo2);
+			munye3.add(puntoojo);
+			munye3.add(puntoojo2);
+			munye3.add(barba1);
+			munye3.add(barba2);
+			munye3.add(barba3);
+			munye3.add(barba4);
+			munye3.add(barba12);
+			munye3.add(barba22);
+			munye3.add(barba32);
+			munye3.add(barba42);
+			munye3.add(barba);
+			munye3.add(nariz);
+			munye3.add(colmillo);
+			munye3.add(colmillo2);
+			munye3.add(boca);
+		        munye3.position.x = 0;
+			munye3.position.y = 17.5;
+			munye3.position.z = 0;
+
+var cabeza = new THREE.Mesh(new THREE.SphereGeometry(10, 28, 28), material_blanco);
+		        cabeza.position.x = 0;
+			cabeza.position.y = 15;
+			cabeza.position.z = 0;
+
+		
+
+var pierna1 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_blanco);
+	      pierna1.position.x = -3;
+	      pierna1.position.y = -10;
+	      pierna1.position.z = 0;
+
+var pierna2 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_blanco);
+	      pierna2.position.x = 3;
+	      pierna2.position.y = -10;
+	      pierna2.position.z = 0;
+
+var mano1 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_blanco);
+		        mano1.position.x = -10;
+			mano1.position.y = 0;
+			mano1.position.z = 0;
+
+var mano2 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_blanco);
+		        mano2.position.x = 10;
+			mano2.position.y = 0;
+			mano2.position.z = 0;
+
+var oreja = new THREE.Mesh(new THREE.CylinderGeometry(4, 4, 1.5,28), material_negro);
+	    oreja.position.x = 7.5;
+	    oreja.position.y = 20;
+	    oreja.position.z = 0;
+	    oreja.rotation.x = 180 * Math.PI/360;
+
+var orejadentro = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 1.5,28), material_blanco);
+	    orejadentro.position.x = 7.5;
+	    orejadentro.position.y = 20;
+	    orejadentro.position.z = 0.1;
+	    orejadentro.rotation.x = 180 * Math.PI/360;
+
+var orejadentro2 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 1.5,28), material_blanco);
+	    orejadentro2.position.x = -7.5;
+	    orejadentro2.position.y = 20;
+	    orejadentro2.position.z = 0.1;
+	    orejadentro2.rotation.x = 180 * Math.PI/360;
+
+var oreja2 = new THREE.Mesh(new THREE.CylinderGeometry(4, 4, 1.5,28), material_negro);
+	    oreja2.position.x = -7.5;
+	    oreja2.position.y = 20;
+	    oreja2.position.z = 0;
+	    oreja2.rotation.x = 180 * Math.PI/360;	
+
+var manchaojo = new THREE.Mesh(new THREE.SphereGeometry(3.5, 28, 28), material_negro);
+		        manchaojo.position.x = -3.5;
+			manchaojo.position.y = 16;
+			manchaojo.position.z = 6.25;
+
+var manchaojo2 = new THREE.Mesh(new THREE.SphereGeometry(3.5, 28, 28), material_negro);
+		        manchaojo2.position.x = 3.5;
+			manchaojo2.position.y = 16;
+			manchaojo2.position.z = 6.25; 
+	    
+var ojo = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo.position.x = -4;
+			ojo.position.y = 16;
+			ojo.position.z = 8;
+
+var ojo2 = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo2.position.x = 4;
+			ojo2.position.y = 16;
+			ojo2.position.z = 8;
+
+var puntoojo = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo.position.x = 4.5;
+			puntoojo.position.y = 16;
+			puntoojo.position.z = 9.5;
+
+var puntoojo2 = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo2.position.x = -4.5;
+			puntoojo2.position.y = 16;
+			puntoojo2.position.z = 9.5;
+
+var nariz = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_negro);
+		        nariz.position.x = 0;
+			nariz.position.y = 13;
+			nariz.position.z = 9;
+			nariz.scale.x = 1.3;
+			nariz.scale.y = 0.8;
+
+var boca = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, 1.5,28), material_rojo);
+	    boca.position.x = 0;
+	    boca.position.y = 10;
+	    boca.position.z = 8;
+	    boca.scale.x = 0.5;
+	    boca.scale.z = 0.5;
+	    boca.rotation.x = 240 * Math.PI/360;	 
+
+
+var munye4 =  new THREE.Mesh(new THREE.CylinderGeometry(5, 10, 15,28), material_negro);
+			munye4.add(cabeza);
+			munye4.add(pierna1);
+			munye4.add(pierna2);
+			munye4.add(mano1);
+			munye4.add(mano2);
+			munye4.add(oreja);
+			munye4.add(oreja2);
+			//munye4.add(orejadentro);
+			//munye4.add(orejadentro2);
+			munye4.add(manchaojo);
+			munye4.add(manchaojo2);
+			munye4.add(ojo);
+			munye4.add(ojo2);
+			munye4.add(puntoojo);
+			munye4.add(puntoojo2);
+			munye4.add(nariz);
+			munye4.add(boca);
+		        munye4.position.x = 0;
+			munye4.position.y = 17.5;
+			munye4.position.z = 0;
+
+var cabeza = new THREE.Mesh(new THREE.SphereGeometry(10, 28, 28), material_marron_oscuro);
+		        cabeza.position.x = 0;
+			cabeza.position.y = 15;
+			cabeza.position.z = 0;
+
+		
+
+var pierna1 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_marron_oscuro);
+	      pierna1.position.x = -3;
+	      pierna1.position.y = -10;
+	      pierna1.position.z = 0;
+
+var pierna2 = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 10), material_marron_oscuro);
+	      pierna2.position.x = 3;
+	      pierna2.position.y = -10;
+	      pierna2.position.z = 0;
+
+var mano1 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_marron_oscuro);
+		        mano1.position.x = -10;
+			mano1.position.y = 0;
+			mano1.position.z = 0;
+
+var mano2 = new THREE.Mesh(new THREE.SphereGeometry(2.5, 28, 28), material_marron_oscuro);
+		        mano2.position.x = 10;
+			mano2.position.y = 0;
+			mano2.position.z = 0;
+
+var oreja = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, 1.5,28), material_marron);
+	    oreja.position.x = 11;
+	    oreja.position.y = 16;
+	    oreja.position.z = 0;
+	    oreja.rotation.x = 180 * Math.PI/360;
+
+var orejadentro = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, 1.5,28), material_rojo);
+	    orejadentro.position.x = 11;
+	    orejadentro.position.y = 16;
+	    orejadentro.position.z = 0.1;
+	    orejadentro.rotation.x = 180 * Math.PI/360;
+
+var orejadentro2 = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, 1.5,28), material_rojo);
+	    orejadentro2.position.x = -11;
+	    orejadentro2.position.y = 16;
+	    orejadentro2.position.z = 0.1;
+	    orejadentro2.rotation.x = 180 * Math.PI/360;
+
+var oreja2 = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, 1.5,28), material_marron);
+	    oreja2.position.x = -11;
+	    oreja2.position.y = 16;
+	    oreja2.position.z = 0;
+	    oreja2.rotation.x = 180 * Math.PI/360;	 
+
+var manchaojo = new THREE.Mesh(new THREE.SphereGeometry(5, 28, 28), material_marron);
+		        manchaojo.position.x = -3;
+			manchaojo.position.y = 16;
+			manchaojo.position.z = 6;
+
+var manchaojo2 = new THREE.Mesh(new THREE.SphereGeometry(5, 28, 28), material_marron);
+		        manchaojo2.position.x = 3;
+			manchaojo2.position.y = 16;
+			manchaojo2.position.z = 6; 
+	    
+var ojo = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo.position.x = -4;
+			ojo.position.y = 16;
+			ojo.position.z = 10;
+
+var ojo2 = new THREE.Mesh(new THREE.SphereGeometry(2, 28, 28), material_blanco);
+		        ojo2.position.x = 4;
+			ojo2.position.y = 16;
+			ojo2.position.z = 10;
+
+var puntoojo = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo.position.x = 4;
+			puntoojo.position.y = 16;
+			puntoojo.position.z = 11.75;
+
+var puntoojo2 = new THREE.Mesh(new THREE.SphereGeometry(0.5, 28, 28), material_negro);
+		        puntoojo2.position.x = -4;
+			puntoojo2.position.y = 16;
+			puntoojo2.position.z = 11.75;
+
+var boca = new THREE.Mesh(new THREE.CylinderGeometry(3, 3, 1.5,28), material_marron);
+	    boca.position.x = 0;
+	    boca.position.y = 11;
+	    boca.position.z = 9;
+	    boca.scale.x = 1.5;
+	    boca.rotation.x = 240 * Math.PI/360;	 
+
+var agujerosnariz = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 1.5,28), material_marron);
+	    agujerosnariz.position.x = 0;
+	    agujerosnariz.position.y = 13.5;
+	    agujerosnariz.position.z = 10.4;
+	    agujerosnariz.scale.x = 1.5;
+	    agujerosnariz.rotation.x = 240 * Math.PI/360;
+
+var puntonariz = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.25, 0.5,28), material_negro);
+	    puntonariz.position.x = 0.5;
+	    puntonariz.position.y = 13.5;
+	    puntonariz.position.z = 11.1;
+	    puntonariz.rotation.x = 240 * Math.PI/360;
+
+var puntonariz2 = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.25, 0.5,28), material_negro);
+	    puntonariz2.position.x = -0.5;
+	    puntonariz2.position.y = 13.5;
+	    puntonariz2.position.z = 11.1;
+	    puntonariz2.rotation.x = 240 * Math.PI/360;
+
+var bocalengua = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, 1.5,28), material_rojo);
+	    bocalengua.position.x = 0;
+	    bocalengua.position.y = 11;
+	    bocalengua.position.z = 9.1;
+	    bocalengua.scale.x = 1.5;
+	    bocalengua.scale.z = 0.5;
+	    bocalengua.rotation.x = 240 * Math.PI/360;
+
+var munye5 =  new THREE.Mesh(new THREE.CylinderGeometry(5, 10, 15,28), material_amarillo);
+			munye5.add(cabeza);
+			munye5.add(pierna1);
+			munye5.add(pierna2);
+			munye5.add(mano1);
+			munye5.add(mano2);
+			munye5.add(oreja);
+			munye5.add(oreja2);
+			munye5.add(orejadentro);
+			munye5.add(orejadentro2);
+			munye5.add(manchaojo);
+			munye5.add(manchaojo2)
+			munye5.add(ojo);
+			munye5.add(ojo2);
+			munye5.add(puntoojo);
+			munye5.add(puntoojo2);
+			munye5.add(boca);
+			munye5.add(bocalengua);
+			munye5.add(agujerosnariz);
+			munye5.add(puntonariz);
+			munye5.add(puntonariz2);
+		        munye5.position.x = 0;
+			munye5.position.y = 17.5;
+			munye5.position.z = 0;
+
+
+			var user = new THREE.Mesh(new THREE.CubeGeometry(17, 40, 17), material_cubo);
+		        user.position.x = 140;
+			user.position.y = 26;
+			user.position.z = 140;
+
+			user.castShadow = user.receiveShadow = true;
+			
+			var user1 = new THREE.Mesh(new THREE.CubeGeometry(17, 40, 17), material_cubo);
+		    
+
+			//user1.castShadow = user1.receiveShadow = true;
+
+			
+			var user2 = new THREE.Mesh(new THREE.CubeGeometry(17, 40, 17), material_cubo);
+			
+
+			//user2.castShadow = user2.receiveShadow = true;
+			
+			var user3 = new THREE.Mesh(new THREE.CubeGeometry(17, 40, 17), material_cubo);
+			    
+
+			//user3.castShadow = user3.receiveShadow = true;
+			
+			var user4 = new THREE.Mesh(new THREE.CubeGeometry(17, 40, 17), material_cubo);
+			
+
+			//user4.castShadow = user4.receiveShadow = true;
+			
+			var user5 = new THREE.Mesh(new THREE.CubeGeometry(17, 40, 17), material_cubo);
+			
+
+			//user5.castShadow = user5.receiveShadow = true;
+
+		      //miEscena.add(user); 
+
+
+
+			/* LUZ */
+
+			var luz = new THREE.SpotLight(0xFFFFFF);
+
+			luz.position.x = 0;
+			luz.position.y = 500;
+			luz.position.z = 0;
+			luz.castShadow = true;
+			
+		
+			miEscena.add(luz);
+
+			var luzalarma = new THREE.SpotLight(0xFF0000);
+
+			luzalarma.position.x = 0;
+			luzalarma.position.y = 500;
+			luzalarma.position.z = 0;
+			luzalarma.castShadow = true;
+			
+			luzalarma.intensity = 0;
+		
+			miEscena.add(luzalarma);
+			
+			var luz2 = new THREE.SpotLight(0xFFFFFF);
+
+			luz2.position.x = 0;
+			luz2.position.y = 00;
+			luz2.position.z = 0;
+			luz2.castShadow = true;
+			
+		
+			miEscena.add(luz2);
+
+			
+				
+			miEscena.add(suelo);
+			
+			
+			
+			
+		
+		
+			miEscena.add(miCamara);
+			
+			animar();
+			function animar(){
+				
+
+				
+				miCamara.position.x = radious * Math.sin( theta * Math.PI / 360 ) * Math.cos( phi * Math.PI / 360 );
+				miCamara.position.y = radious * Math.sin( phi * Math.PI / 360 );
+				miCamara.position.z = radious * Math.cos( theta * Math.PI / 360 ) * Math.cos( phi * Math.PI / 360 );
+				
+				luz2.position.x = miCamara.position.x;
+				luz2.position.y = miCamara.position.y;
+				luz2.position.z = miCamara.position.z;
+				
+				miCamara.lookAt(suelo.position);
+				  
+
+				miRender.render(miEscena, miCamara);
+				window.requestAnimationFrame(animar);
+				//control();
+			stats.begin();
+			stats.end();
+			}
+			//animar(new Date().getTime());
+
+setInterval(control, (1000 / 60));
+
+function tiempo(){
+if(time) {
+  timetime -=1;
+  var d=new Date(timetime*1000);
+  var minuto = (d.getMinutes()<10)?d.getMinutes():d.getMinutes();
+  var segundo = (d.getSeconds()<10)?"0"+d.getSeconds():d.getSeconds();
+  $('#tiempo').html(minuto +":"+segundo);
+  if(timetime < 60) { var tiempoimpar = timetime % 2;
+		      if( tiempoimpar != 0) { luzalarma.intensity = 1;
+		      } else { luzalarma.intensity = 0; }
+		    }
+  if(timetime == 0) { time=false;
+		      websocket.emit("fueradetiempo", numroom);
+		    }
+  }
+}
+
+setInterval(tiempo, 1000);
+
+
+
+document.addEventListener('keydown', function (e)
+        {
+
+                switch(e.keyCode)
+                {
+
+                        case 37: // left
+				left = true;
+				
+                                break;
+			      
+                        case 38: // up
+				up = true;
+
+                                break;
+
+                        case 39: // right
+				right = true;
+                                break;
+
+                        case 40: // down
+				down = true;
+                                break;
+                        case 65: // A
+				bomb = true;
+			        break;
+			        
+			case 27: // Escape
+					$('#messagechat').blur();
+			        break;
+		  }
+});
+
+document.addEventListener('keyup', function (e)
+        {
+
+                switch(e.keyCode)
+                {
+
+                        case 37: // left
+				left = false;
+				
+                                break;
+			      
+                        case 38: // up
+				up = false;
+                                break;
+
+                        case 39: // right
+				right = false;
+                                break;
+
+                        case 40: // down
+				down = false;
+                                break;
+			
+			case 65: // A
+				bomb = false;
+                                break;
+		  }
+});
+
+
+
+
+
+
+function control() {
+
+munye1.position.x = user1.position.x;
+//munye1.position.y = user1.position.y;
+munye1.position.z = user1.position.z;  
+
+munye2.position.x = user2.position.x;
+//munye1.position.y = user1.position.y;
+munye2.position.z = user2.position.z;  
+
+munye3.position.x = user3.position.x;
+//munye1.position.y = user1.position.y;
+munye3.position.z = user3.position.z;  
+
+munye4.position.x = user4.position.x;
+//munye1.position.y = user1.position.y;
+munye4.position.z = user4.position.z;  
+
+munye5.position.x = user5.position.x;
+//munye1.position.y = user1.position.y;
+munye5.position.z = user5.position.z;  
+
+var arriba = new THREE.Vector3( 0, 1, 0 );
+var abajo = new THREE.Vector3( 0, -1, 0 );
+var up_direction = new THREE.Vector3( 0, 0, 1 );
+var down_direction = new THREE.Vector3( 0, 0, -1 );
+var left_direction = new THREE.Vector3( 1, 0, 0 );
+var right_direction = new THREE.Vector3( -1, 0, 0 );
+
+var up_right_direction = new THREE.Vector3( -1, 0, 1 );
+
+
+var userancho = parseFloat(user.geometry.width/2);
+var userlato = parseFloat(user.geometry.height/2);
+var gravedad_move = true;
+var onground = false;
+
+var halfSize = parseFloat(user.geometry.width/2);
+var nearHalfSize = halfSize-5;
+
+var up_move, down_move, right_move, left_move;
+
+
+				var f_vector = new THREE.Vector3( 0, 0, -1 );
+				var b_vector = new THREE.Vector3( 0, 0, 1 );
+				var l_vector = new THREE.Vector3( -1, 0, 0 );
+				var r_vector = new THREE.Vector3( 1, 0, 0 );
+
+				var left2 = new THREE.Vector3( user.position.x-halfSize, user.position.y-nearHalfSize, user.position.z );
+				var right2 = new THREE.Vector3( user.position.x+halfSize, user.position.y-nearHalfSize, user.position.z );
+				var front2 = new THREE.Vector3( user.position.x, user.position.y-nearHalfSize, user.position.z+halfSize );
+				var back2 = new THREE.Vector3( user.position.x, user.position.y-nearHalfSize, user.position.z-halfSize );
+				
+				// front
+				if (up) {
+				      websocket.emit("position",  { usuario: usuario, posx: user.position.x , posy: user.position.y, posz: user.position.z, direction: "up", room: numroom});
+
+					up_move = true;
+					var left_ray = new THREE.Raycaster( left2, f_vector );
+					var left_intersects = left_ray.intersectObjects( collidableMeshList );
+					if ( left_intersects.length > 0 && left_intersects[0].distance < halfSize+2 ) {
+						user.position.z = left_intersects[0].point.z+halfSize+1;
+						up_move = false;
+					}
+					var right_ray = new THREE.Raycaster( right2, f_vector );
+					var right_intersects = right_ray.intersectObjects( collidableMeshList );
+					if ( right_intersects.length > 0 && right_intersects[0].distance < halfSize+2 ) {
+						user.position.z = right_intersects[0].point.z+halfSize+1;
+						up_move = false;
+					}
+				}
+				// back
+				if (down) {
+				websocket.emit("position",  { usuario: usuario, posx: user.position.x , posy: user.position.y, posz: user.position.z, direction: "down", room: numroom});
+
+					down_move = true;
+					var left_ray = new THREE.Raycaster( left2, b_vector );
+					var left_intersects = left_ray.intersectObjects( collidableMeshList );
+					if ( left_intersects.length > 0 && left_intersects[0].distance < halfSize+2 ) {
+						user.position.z = left_intersects[0].point.z-halfSize-1;
+						down_move = false;
+					}
+					var right_ray = new THREE.Raycaster( right2, b_vector );
+					var right_intersects = right_ray.intersectObjects( collidableMeshList );
+					if ( right_intersects.length > 0 && right_intersects[0].distance < halfSize+2) {
+						user.position.z = right_intersects[0].point.z-halfSize-1;
+						down_move = false;
+					}
+				}				
+				// right
+				if (right) {
+				websocket.emit("position",  { usuario: usuario, posx: user.position.x , posy: user.position.y, posz: user.position.z, direction: "rigth", room: numroom});
+
+					right_move = true;
+					var back_ray = new THREE.Raycaster( back2, r_vector );
+					var back_intersects = back_ray.intersectObjects( collidableMeshList );
+					if ( back_intersects.length > 0 && back_intersects[0].distance < halfSize+2 ) {
+						user.position.x = back_intersects[0].point.x-halfSize-1;
+						right_move = false;
+					}
+					var front_ray = new THREE.Raycaster( front2, r_vector );
+					var front_intersects = front_ray.intersectObjects( collidableMeshList );
+					if ( front_intersects.length > 0 && front_intersects[0].distance < halfSize+2) {
+						user.position.x = front_intersects[0].point.x-halfSize-1;
+						right_move = false;
+					}
+				}
+				// left
+				if (left) {
+				websocket.emit("position",  { usuario: usuario, posx: user.position.x , posy: user.position.y, posz: user.position.z, direction: "left", room: numroom});
+
+					left_move = true;
+					var back_ray = new THREE.Raycaster( back2, l_vector );
+					var back_intersects = back_ray.intersectObjects( collidableMeshList );
+					if ( back_intersects.length > 0 && back_intersects[0].distance < halfSize+2 ) {
+						user.position.x = back_intersects[0].point.x+halfSize+1;
+						left_move = false;
+					}
+					var front_ray = new THREE.Raycaster( front2, l_vector );
+					var front_intersects = front_ray.intersectObjects( collidableMeshList );
+					if ( front_intersects.length > 0 && front_intersects[0].distance < halfSize+2 ) {
+						user.position.x = front_intersects[0].point.x+halfSize+1;
+						left_move = false;
+					}
+				}
+
+
+
+
+
+
+
+
+
+
+for (var vertexIndex = 0; vertexIndex < user.geometry.vertices.length; vertexIndex++)
+{       
+    var localVertex = user.geometry.vertices[vertexIndex].clone();
+    var globalVertex = localVertex.applyMatrix4(user.matrix);
+
+    var directionVector = globalVertex.sub( new THREE.Vector3( user.position.x, user.position.y, user.position.z) );
+   
+    
+    var ray = new THREE.Raycaster( user.position, directionVector.clone().normalize() );
+    var collisionResults = ray.intersectObjects( collisionbomb );
+    if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
+    {
+        // a collision occurred... do something...
+        miEscena.remove(user);
+	
+
+    }
+}
+
+for (var vertexIndex = 0; vertexIndex < user1.geometry.vertices.length; vertexIndex++)
+{       
+    var localVertex = user1.geometry.vertices[vertexIndex].clone();
+    var globalVertex = localVertex.applyMatrix4(user1.matrix);
+
+    var directionVector = globalVertex.sub( new THREE.Vector3( user1.position.x, user1.position.y, user1.position.z) );
+   
+    
+    var ray = new THREE.Raycaster( user1.position, directionVector.clone().normalize() );
+    var collisionResults = ray.intersectObjects( collisionbomb );
+    if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
+    {
+        // a collision occurred... do something...
+	miEscena.remove(user1);
+	//if(usuario == "player1") { websocket.emit("muereplayer", "player1" ); }
+	websocket.emit("muereplayer", { user: "player1", room: numroom} );
+
+    }
+}
+
+for (var vertexIndex = 0; vertexIndex < user2.geometry.vertices.length; vertexIndex++)
+{       
+    var localVertex = user2.geometry.vertices[vertexIndex].clone();
+    var globalVertex = localVertex.applyMatrix4(user2.matrix);
+
+    var directionVector = globalVertex.sub( new THREE.Vector3( user2.position.x, user2.position.y, user2.position.z) );
+   
+    
+    var ray = new THREE.Raycaster( user2.position, directionVector.clone().normalize() );
+    var collisionResults = ray.intersectObjects( collisionbomb );
+    if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
+    {
+        // a collision occurred... do something...
+        miEscena.remove(user2);
+	//if(usuario == "player2") { websocket.emit("muereplayer", "player2" ); }
+	websocket.emit("muereplayer", { user: "player2", room: numroom} );
+    }
+}
+
+for (var vertexIndex = 0; vertexIndex < user3.geometry.vertices.length; vertexIndex++)
+{       
+    var localVertex = user3.geometry.vertices[vertexIndex].clone();
+    var globalVertex = localVertex.applyMatrix4(user3.matrix);
+
+    var directionVector = globalVertex.sub( new THREE.Vector3( user3.position.x, user3.position.y, user3.position.z) );
+   
+    
+    var ray = new THREE.Raycaster( user3.position, directionVector.clone().normalize() );
+    var collisionResults = ray.intersectObjects( collisionbomb );
+    if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
+    {
+        // a collision occurred... do something...
+        miEscena.remove(user3);
+	//if(usuario == "player3") { websocket.emit("muereplayer", "player3" ); }
+	websocket.emit("muereplayer", { user: "player3", room: numroom} );
+    }
+}
+
+for (var vertexIndex = 0; vertexIndex < user4.geometry.vertices.length; vertexIndex++)
+{       
+    var localVertex = user4.geometry.vertices[vertexIndex].clone();
+    var globalVertex = localVertex.applyMatrix4(user4.matrix);
+
+    var directionVector = globalVertex.sub( new THREE.Vector3( user4.position.x, user4.position.y, user4.position.z) );
+   
+    
+    var ray = new THREE.Raycaster( user4.position, directionVector.clone().normalize() );
+    var collisionResults = ray.intersectObjects( collisionbomb );
+    if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
+    {
+        // a collision occurred... do something...
+        miEscena.remove(user4);
+	//if(usuario == "player4") { websocket.emit("muereplayer", "player4" ); }
+	websocket.emit("muereplayer", { user: "player4", room: numroom} );
+    }
+}
+
+for (var vertexIndex = 0; vertexIndex < user5.geometry.vertices.length; vertexIndex++)
+{       
+    var localVertex = user5.geometry.vertices[vertexIndex].clone();
+    var globalVertex = localVertex.applyMatrix4(user5.matrix);
+
+    var directionVector = globalVertex.sub( new THREE.Vector3( user5.position.x, user5.position.y, user5.position.z) );
+   
+    
+    var ray = new THREE.Raycaster( user5.position, directionVector.clone().normalize() );
+    var collisionResults = ray.intersectObjects( collisionbomb );
+    if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
+    {
+        // a collision occurred... do something...
+        miEscena.remove(user5);
+	//if(usuario == "player5"){ websocket.emit("muereplayer", "player5" ); }
+	websocket.emit("muereplayer", { user: "player5", room: numroom} );
+    }
+}
+
+
+
+/*
+if (up) { 
+var up_move = true;
+	
+for (var i = 0; i < user.geometry.width; i++){
+	var point = new THREE.Vector3( (user.position.x-userancho) + i , user.position.y-5 , user.position.z+userancho );
+	var ray = new THREE.Raycaster( point, up_direction );
+	var intersects = ray.intersectObjects( collidableMeshList );
+	if ( intersects.length > 0 && intersects[0].distance == 1) {
+	
+	user.position.z = intersects[0].point.z-userancho-1;
+	up_move = false;
+	} 
+	  
+    }
+}
+
+if (down) { 
+var down_move = true;
+	
+for (var i = 0; i < user.geometry.width; i++){
+	var point = new THREE.Vector3( (user.position.x-userancho) + i , user.position.y-5 , user.position.z-userancho );
+	var ray = new THREE.Raycaster( point, down_direction );
+	var intersects = ray.intersectObjects( collidableMeshList );
+	if ( intersects.length > 0 && intersects[0].distance == 1) {
+	
+	user.position.z = intersects[0].point.z+userancho+1;
+	down_move = false;
+	} 
+	  
+    }
+}
+
+
+if (left) { 
+var left_move = true;
+	
+for (var i = 0; i < user.geometry.width; i++){
+	var point = new THREE.Vector3( user.position.x+userancho , user.position.y-5 , (user.position.z-userancho) + i );
+	var ray = new THREE.Raycaster( point, left_direction );
+	var intersects = ray.intersectObjects( collidableMeshList );
+	if ( intersects.length > 0 && intersects[0].distance == 1) {
+	
+	user.position.x = intersects[0].point.x-userancho-1;
+	left_move = false;
+	} 
+	  
+    }
+}
+
+if (right) { 
+var right_move = true;
+	
+for (var i = 0; i < user.geometry.width; i++){
+	var point = new THREE.Vector3( user.position.x-userancho , user.position.y-5 , (user.position.z-userancho) + i );
+	var ray = new THREE.Raycaster( point, right_direction );
+	var intersects = ray.intersectObjects( collidableMeshList );
+	if ( intersects.length > 0 && intersects[0].distance == 1) {
+	
+	user.position.x = intersects[0].point.x+userancho+1;
+	right_move = false;
+	} 
+	  
+    }
+}
+
+*/
+	
+/*
+//PRUEBAAAAAA
+if(up) {
+
+if(up) { var up_move = true; }
+
+
+
+for (var vertexIndex = 0; vertexIndex < user.geometry.vertices.length; vertexIndex++)
+{       
+    var localVertex = user.geometry.vertices[vertexIndex].clone();
+    var globalVertex = localVertex.applyMatrix4(user.matrix);
+
+    var directionVector = globalVertex.sub( new THREE.Vector3( user.position.x, user.position.y, user.position.z+1 ) );
+   
+    
+    var ray = new THREE.Raycaster( user.position, directionVector.clone().normalize() );
+    var collisionResults = ray.intersectObjects( collidableMeshList );
+    if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
+    {
+        // a collision occurred... do something...
+        user.position.z = collisionResults[0].point.z+userancho+1;
+	if(up){ up_move = false; }
+
+    }
+}
+
+
+}
+
+if(down) {
+
+
+if(down) { var down_move = true; }
+
+
+
+for (var vertexIndex = 0; vertexIndex < user.geometry.vertices.length; vertexIndex++)
+{       
+    var localVertex = user.geometry.vertices[vertexIndex].clone();
+     var globalVertex = localVertex.applyMatrix4(user.matrix);
+
+   var directionVector = globalVertex.sub(  new THREE.Vector3( user.position.x, user.position.y, user.position.z-1 ));
+   
+
+    var ray = new THREE.Raycaster( user.position, directionVector.clone().normalize() );
+    var collisionResults = ray.intersectObjects( collidableMeshList );
+    if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
+    {
+        // a collision occurred... do something...
+	user.position.z = collisionResults[0].point.z-userancho-1;
+	if(down){ down_move = false; }
+
+    }
+}
+
+
+}
+
+if(left) {
+
+
+if(left) { var left_move = true; }
+
+
+
+for (var vertexIndex = 0; vertexIndex < user.geometry.vertices.length; vertexIndex++)
+{       
+    var localVertex = user.geometry.vertices[vertexIndex].clone();
+     var globalVertex = localVertex.applyMatrix4(user.matrix);
+
+    var directionVector = globalVertex.sub( new THREE.Vector3( user.position.x+1, user.position.y, user.position.z ) );
+    
+
+    var ray = new THREE.Raycaster( user.position, directionVector.clone().normalize() );
+    var collisionResults = ray.intersectObjects( collidableMeshList );
+    if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
+    {
+        // a collision occurred... do something...
+	user.position.x = collisionResults[0].point.x+userancho+1;
+	if(left){ left_move = false; }	
+    }
+}
+
+
+}
+
+
+
+if(right) {
+
+if(right) { var right_move = true; }
+
+
+for (var vertexIndex = 0; vertexIndex < user.geometry.vertices.length; vertexIndex++)
+{       
+    var localVertex = user.geometry.vertices[vertexIndex].clone();
+     var globalVertex = localVertex.applyMatrix4(user.matrix);
+
+    var directionVector = globalVertex.sub(  new THREE.Vector3( user.position.x-1, user.position.y, user.position.z ) );
+    
+
+    var ray = new THREE.Raycaster( user.position, directionVector.clone().normalize() );
+    var collisionResults = ray.intersectObjects( collidableMeshList );
+    if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
+    {
+        // a collision occurred... do something...
+	user.position.x = collisionResults[0].point.x-userancho-1;
+	if(right){ right_move = false; }
+	
+    }
+}
+
+
+}
+
+*/
+var velocity = 1;
+	
+
+if(up_move){ 
+if(user.position.z <= -100) { user.position.z = -100 } else { user.position.z -=velocity;  }
+websocket.emit("position",  { usuario: usuario, posx: user.position.x , posy: user.position.y, posz: user.position.z, direction: "up", room: numroom});
+}
+if(down_move){ 
+if(user.position.z >= 100) { user.position.z = 100 } else { user.position.z +=velocity; }
+websocket.emit("position",  { usuario: usuario, posx: user.position.x , posy: user.position.y, posz: user.position.z, direction: "down", room: numroom});
+}
+if(left_move){ 
+if(user.position.x <= -120) { user.position.x = -120 } else {user.position.x -=velocity;}
+websocket.emit("position",  { usuario: usuario, posx: user.position.x , posy: user.position.y, posz: user.position.z, direction: "left", room: numroom});
+ }
+if(right_move){ 
+if(user.position.x >= 120) { user.position.x = 120 } else {user.position.x +=velocity;}
+websocket.emit("position",  { usuario: usuario, posx: user.position.x , posy: user.position.y, posz: user.position.z, direction: "rigth", room: numroom});
+}
+
+if(bomb && bombnumber > 0 && vivo && chatfocus == false) {
+bombnumber -= 1;
+var cordx = parseInt(user.position.x);
+var posx = cordx%20;
+    if(posx == 0) {
+    cordx = cordx;
+    } else { 
+    var posibilidad1 = cordx+1;
+    var posibilidad2 = cordx+2;
+    var posibilidad3 = cordx+3;
+    var posibilidad4 = cordx+4;
+    var posibilidad5 = cordx+5;
+    var posibilidad6 = cordx+6;
+    var posibilidad7 = cordx+7;
+    var posibilidad8 = cordx+8;
+    var posibilidad9 = cordx+9;
+    var posibilidadnega1 = cordx-1;
+    var posibilidadnega2 = cordx-2;
+    var posibilidadnega3 = cordx-3;
+    var posibilidadnega4 = cordx-4;
+    var posibilidadnega5 = cordx-5;
+    var posibilidadnega6 = cordx-6;
+    var posibilidadnega7 = cordx-7;
+    var posibilidadnega8 = cordx-8;
+    var posibilidadnega9 = cordx-9;
+    var posibilidadnega10 = cordx-10;
+    if(posibilidad1%20 == 0) { cordx = posibilidad1;}
+    if(posibilidad2%20 == 0) { cordx = posibilidad2;}
+    if(posibilidad3%20 == 0) { cordx = posibilidad3;}
+    if(posibilidad4%20 == 0) { cordx = posibilidad4;}
+    if(posibilidad5%20 == 0) { cordx = posibilidad5;}
+    if(posibilidad6%20 == 0) { cordx = posibilidad6;}
+    if(posibilidad7%20 == 0) { cordx = posibilidad7;}
+    if(posibilidad8%20 == 0) { cordx = posibilidad8;}
+    if(posibilidad9%20 == 0) { cordx = posibilidad9;}
+    if(posibilidadnega1%20 == 0) { cordx = posibilidadnega1;}
+    if(posibilidadnega2%20 == 0) { cordx = posibilidadnega2;}
+    if(posibilidadnega3%20 == 0) { cordx = posibilidadnega3;}
+    if(posibilidadnega4%20 == 0) { cordx = posibilidadnega4;}
+    if(posibilidadnega5%20 == 0) { cordx = posibilidadnega5;}
+    if(posibilidadnega6%20 == 0) { cordx = posibilidadnega6;}
+    if(posibilidadnega7%20 == 0) { cordx = posibilidadnega7;}
+    if(posibilidadnega8%20 == 0) { cordx = posibilidadnega8;}
+    if(posibilidadnega9%20 == 0) { cordx = posibilidadnega9;}
+    if(posibilidadnega10%20 == 0) { cordx = posibilidadnega10;}
+    }
+
+var cordz = parseInt(user.position.z);
+var posz = cordz%20;
+    if(posz == 0) {
+    cordz = cordz;
+    } else { 
+    var posibilidad1 = cordz+1;
+    var posibilidad2 = cordz+2;
+    var posibilidad3 = cordz+3;
+    var posibilidad4 = cordz+4;
+    var posibilidad5 = cordz+5;
+    var posibilidad6 = cordz+6;
+    var posibilidad7 = cordz+7;
+    var posibilidad8 = cordz+8;
+    var posibilidad9 = cordz+9;
+    var posibilidadnega1 = cordz-1;
+    var posibilidadnega2 = cordz-2;
+    var posibilidadnega3 = cordz-3;
+    var posibilidadnega4 = cordz-4;
+    var posibilidadnega5 = cordz-5;
+    var posibilidadnega6 = cordz-6;
+    var posibilidadnega7 = cordz-7;
+    var posibilidadnega8 = cordz-8;
+    var posibilidadnega9 = cordz-9;
+    var posibilidadnega10 = cordz-10;
+    if(posibilidad1%20 == 0) { cordz = posibilidad1;}
+    if(posibilidad2%20 == 0) { cordz = posibilidad2;}
+    if(posibilidad3%20 == 0) { cordz = posibilidad3;}
+    if(posibilidad4%20 == 0) { cordz = posibilidad4;}
+    if(posibilidad5%20 == 0) { cordz = posibilidad5;}
+    if(posibilidad6%20 == 0) { cordz = posibilidad6;}
+    if(posibilidad7%20 == 0) { cordz = posibilidad7;}
+    if(posibilidad8%20 == 0) { cordz = posibilidad8;}
+    if(posibilidad9%20 == 0) { cordz = posibilidad9;}
+    if(posibilidadnega1%20 == 0) { cordz = posibilidadnega1;}
+    if(posibilidadnega2%20 == 0) { cordz = posibilidadnega2;}
+    if(posibilidadnega3%20 == 0) { cordz = posibilidadnega3;}
+    if(posibilidadnega4%20 == 0) { cordz = posibilidadnega4;}
+    if(posibilidadnega5%20 == 0) { cordz = posibilidadnega5;}
+    if(posibilidadnega6%20 == 0) { cordz = posibilidadnega6;}
+    if(posibilidadnega7%20 == 0) { cordz = posibilidadnega7;}
+    if(posibilidadnega8%20 == 0) { cordz = posibilidadnega8;}
+    if(posibilidadnega9%20 == 0) { cordz = posibilidadnega9;}
+    if(posibilidadnega10%20 == 0) { cordz = posibilidadnega10;}
+    }
+
+
+websocket.emit("bomb", { usuario: usuario, posx: cordx, posy: user.position.y-10, posz: cordz, room: numroom});
+//$("#error").html("Posicion x:" + user.position.x  + " Posicion z:" + user.position.z + " Resto" + cordx);
+}
+
+
+
+} // FIN  SCRIPT
+var mouse = { x: 0, y: 0 };
+var projector, ray, mouse3D, isMouseDown = false, onMouseDownPosition, radious = 240, theta = 0, onMouseDownTheta = 45, phi = 90, onMouseDownPhi = 60;
+
+ //RATONN
+//RATONN
+//RATONN
+$('#escenario').mousemove(onDocumentMouseMove);
+$('#escenario').mousedown(onDocumentMouseDown);
+$('#escenario').mouseup(onDocumentMouseUp);
+
+
+onMouseDownPosition = new THREE.Vector2();
+projector = new THREE.Projector();
+ray = new THREE.Ray( miCamara.position, null );
+
+
+function onDocumentMouseDown( event ) {
+
+				event.preventDefault();
+
+				isMouseDown = true;
+				onMouseDownTheta = theta;
+				onMouseDownPhi = phi;
+				onMouseDownPosition.x = event.clientX;
+				onMouseDownPosition.y = event.clientY;
+						
+	
+render();
+			}
+
+function onDocumentMouseMove( event ) {
+mouse.x = ( (event.clientX) / miRender.domElement.width ) * 2 - 1;
+mouse.y = - ( (event.clientY-50) / miRender.domElement.height ) * 2 + 1;
+
+    if ( isMouseDown ) {
+    
+        theta = - ( ( event.clientX - onMouseDownPosition.x ) * 0.5 )
+                + onMouseDownTheta;
+        phi = ( ( event.clientY - onMouseDownPosition.y ) * 0.5 )
+              + onMouseDownPhi;
+	
+	theta = Math.min( 0, Math.max(0, theta));
+        phi = Math.min( 180, Math.max( 0, phi ) );
+
+        miCamara.position.x = radious * Math.sin( theta * Math.PI / 360 )
+                            * Math.cos( phi * Math.PI / 360 );
+        miCamara.position.y = radious * Math.sin( phi * Math.PI / 360 );
+        miCamara.position.z = radious * Math.cos( theta * Math.PI / 360 )
+                            * Math.cos( phi * Math.PI / 360 );
+        miCamara.updateMatrix();
+
+    }
+
+    mouse3D = projector.unprojectVector(
+        new THREE.Vector3(
+            ( event.clientX / miRender.domElement.width ) * 2 - 1,
+            - ( event.clientY-50 / miRender.domElement.height ) * 2 + 1,
+            0.5
+        ),
+        miCamara
+    );
+    ray.direction = mouse3D.sub( miCamara.position ).normalize();
+
+    //interact();
+	
+    render();
+
+}
+
+
+function onDocumentMouseUp( event ) {
+
+				event.preventDefault();
+
+				isMouseDown = false;
+				
+				onMouseDownPosition.x = event.clientX - onMouseDownPosition.x;
+				onMouseDownPosition.y = event.clientY - onMouseDownPosition.y;
+
+render();
+}
+
+
+function render() {
+				
+				
+				miCamara.lookAt(suelo.position);
+				miRender.render(miEscena, miCamara);
+}
+
+</script>
+<div id="error"></div>
+ </body>
+</html>
